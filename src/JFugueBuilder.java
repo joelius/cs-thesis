@@ -14,6 +14,7 @@ public class JFugueBuilder {
         jfugueFile = stuff;
     }
 
+    // TODO: test this method & finish it, too
     public void writeFile(String stuff) throws IOException {
 
 

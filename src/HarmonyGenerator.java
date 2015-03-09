@@ -25,6 +25,8 @@ public class HarmonyGenerator {
         dataMap = new HashMap<NoteInfo, Integer>();
     }
 
+
+    // TODO: test this method
     public void processData(){
         NoteInfo noHarmony; // populating the hashmap without the harmony info in the index,
                             // so can index on all the data except the harmony data, which is
@@ -44,6 +46,7 @@ public class HarmonyGenerator {
         }
     }
 
+    // TODO: test this method
     public void generateHarmonies(){
         NoteInfo temp;
         Integer harmony;
