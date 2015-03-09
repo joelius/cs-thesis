@@ -1,8 +1,5 @@
-import org.jfugue.Note;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Harmony Data Loader is a bucket into which the data is dumped.
@@ -29,9 +26,9 @@ public class HarmonyDataLoader {
 
         int[] trend;
 
-        for ( NoteInfoReader.NoteInfoTrio trio : NoteInfoReader.lst){
+        for ( NoteInfoReader.NoteInfoTetra tetra : NoteInfoReader.lst){
 
-        if (DEBUG){System.out.println("Trio. Note: " + trio.nt + " Root: " + trio.rt + " Harmony: " + trio.hmy);}
+        if (DEBUG){System.out.println("Trio. Note: " + tetra.nt + " Root: " + tetra.rt + " Harmony: " + tetra.hmy);}
 
             int numberOfPreviousNotes = data.size();
             if (numberOfPreviousNotes < 1){ // if statements to set trend of previous harmonies
@@ -39,20 +36,20 @@ public class HarmonyDataLoader {
             }
             else if (numberOfPreviousNotes == 1) {
                 NoteInfo temp = data.get(0);
-                trend = new int[] {0,0, temp.getHarmony()-temp.getTonus()};
+                trend = new int[] {0,0, temp.getHarmony()-temp.getNote()};
             }
             else if (numberOfPreviousNotes == 2) {
                 NoteInfo temp = data.get(0);
                 NoteInfo temp2 = data.get(1);
-                trend = new int[] {0, temp.getHarmony()-temp.getTonus(), temp2.getHarmony()-temp2.getTonus()};
+                trend = new int[] {0, temp.getHarmony()-temp.getNote(), temp2.getHarmony()-temp2.getNote()};
             }
             else{
                 NoteInfo temp = data.get(numberOfPreviousNotes-3);
                 NoteInfo temp2 = data.get(numberOfPreviousNotes-2);
                 NoteInfo temp3 = data.get(numberOfPreviousNotes-1);
-                trend = new int[] {temp.getHarmony()-temp.getTonus(), temp2.getHarmony()-temp2.getTonus(), temp3.getHarmony()-temp3.getTonus()};
+                trend = new int[] {temp.getHarmony()-temp.getNote(), temp2.getHarmony()-temp2.getNote(), temp3.getHarmony()-temp3.getNote()};
             }
-            data.add(new NoteInfo(trio.nt, trio.rt, trio.hmy, NoteInfoReader.key, trend));
+            data.add(new NoteInfo(tetra.nt, tetra.ln, tetra.rt, tetra.hmy, NoteInfoReader.key, trend));
             if (DEBUG) {System.out.println("Size of data: " + data.size());}
         }
         if (DEBUG){System.out.println("Size of lst: " + NoteInfoReader.lst.size());}

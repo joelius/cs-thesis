@@ -26,13 +26,13 @@ public class InputDataLoader {
 
         if (DEBUG){System.out.println("populateWithDataFile");}
 
-         for ( NoteInfoReader.NoteInfoTrio trio : NoteInfoReader.lst){
+         for ( NoteInfoReader.NoteInfoTetra tetra : NoteInfoReader.lst){
 
-        if (DEBUG){System.out.println("Trio. Note: " + trio.nt + " Root: " + trio.rt + " Harmony: " + trio.hmy);}
+        if (DEBUG){System.out.println("Trio. Note: " + tetra.nt + " Root: " + tetra.rt + " Harmony: " + tetra.hmy);}
 
             int numberOfPreviousNotes = data.size();
 
-            data.add(new NoteInfo(trio.nt, trio.rt, -1, NoteInfoReader.key, null));
+            data.add(new NoteInfo(tetra.nt, tetra.ln, tetra.rt, -1, NoteInfoReader.key, null));
             if (DEBUG) {System.out.println("Size of data: " + data.size());}
         }
         if (DEBUG){System.out.println("Size of lst: " + NoteInfoReader.lst.size());}

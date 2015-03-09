@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jolpatrik on 15-02-23.
@@ -9,18 +8,20 @@ import java.util.List;
  */
 public class NoteInfoReader {
 
-    public static ArrayList<NoteInfoTrio> lst = new ArrayList<NoteInfoTrio>();
+    public static ArrayList<NoteInfoTetra> lst = new ArrayList<NoteInfoTetra>();
     public static String key = "";
 
-    public static class NoteInfoTrio
+    public static class NoteInfoTetra
     {
         public int nt; // note
+        public int ln; // length
         public int rt; // root note of current chord
         public int hmy; // harmony of note
 
-        private NoteInfoTrio(int ntIn, int rtIn, int hmyIn)
+        private NoteInfoTetra(int ntIn, int lnIn, int rtIn, int hmyIn)
         {
             nt = ntIn;
+            ln = lnIn;
             rt = rtIn;
             hmy= hmyIn;
         }
@@ -30,11 +31,12 @@ public class NoteInfoReader {
         String[] parts = ln.split(" ");
 
         int n = Integer.parseInt(parts[0]);
-        int r = Integer.parseInt(parts[1]);
-        int h = Integer.parseInt(parts[2]);
-        NoteInfoTrio nit = new NoteInfoTrio(n,r,h);
+        int l = Integer.parseInt(parts[1]);
+        int r = Integer.parseInt(parts[2]);
+        int h = Integer.parseInt(parts[3]);
+        NoteInfoTetra nit = new NoteInfoTetra(n,l,r,h);
         lst.add(nit);
-        System.out.println("n: " + n + ", r: " + r + ", h: " + h + ", key: " + key);
+        System.out.println("n: " + n + ", l: " + l + ", r: " + r + ", h: " + h + ", key: " + key);
     }
 
     public static void main(String args[]){
