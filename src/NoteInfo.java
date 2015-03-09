@@ -33,6 +33,14 @@ public class NoteInfo {
         this.note = noteIn;
     }
 
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
     public int getRoot() { return root; }
 
     public void setRoot(int rootIn) {
