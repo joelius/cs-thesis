@@ -36,6 +36,35 @@ public class HarmonyGenerator {
         for (NoteInfo item : hds.dataset){
 
             noHarmony = new NoteInfo(item.getNote(), item.getLength(), item.getRoot(), -1, item.getKey(), item.getTrend());
+
+            dataMap.put(noHarmony, item.getHarmony());
+        }
+    }
+
+
+    // TODO: test this method
+    public void processDataWithoutLengthInfo(){
+       NoteInfo noLength;
+
+        for (NoteInfo item : hds.dataset){
+
+            noLength = new NoteInfo(item.getNote(), -1 , item.getRoot(), -1, item.getKey(), item.getTrend());
+
+            dataMap.put(noLength, item.getHarmony());
+        }
+    }
+
+
+    // TODO: test this method
+    public void processDataWithoutTrendInfo(){
+        NoteInfo noHarmony; // populating the hashmap without the harmony info in the index,
+        // so can index on all the data except the harmony data, which is
+        // what we're trying to generate
+        NoteInfo noTrend;
+
+        for (NoteInfo item : hds.dataset){
+
+            noHarmony = new NoteInfo(item.getNote(), item.getLength(), item.getRoot(), -1, item.getKey(), item.getTrend());
             noTrend = new NoteInfo(item.getNote(), item.getLength(), item.getRoot(), -1, item.getKey(), null);
 
             // this puts all possible variations of data input, in the case that the note we're trying
@@ -45,6 +74,19 @@ public class HarmonyGenerator {
             dataMap.put(noTrend, item.getHarmony());
         }
     }
+
+    // TODO: test this method
+    public void processDataWithNeitherLengthNorTrendInfo(){
+        NoteInfo neitherLengthNorTrend;
+
+        for (NoteInfo item : hds.dataset){
+
+            neitherLengthNorTrend = new NoteInfo(item.getNote(), -1 , item.getRoot(), -1, item.getKey(), null);
+
+            dataMap.put(neitherLengthNorTrend, item.getHarmony());
+        }
+    }
+
 
     // TODO: test this method
     public void generateHarmonies(){
