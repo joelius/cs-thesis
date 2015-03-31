@@ -31,8 +31,23 @@ public class JNoteInfoReader {
 
     public static void addToLst(String ln){
         String[] parts = ln.split(" ");
+        JNote note, root, harmony;
 
-        JNoteInfoTrio nit = new JNoteInfoTrio(new JNote(parts[0]),new JNote(parts[1]),new JNote(parts[2]));
+        note = new JNote(parts[0]);
+
+        if (parts[1].equalsIgnoreCase("L")){
+                root = null;
+        } else {
+            root = new JNote(parts[1]);
+        }
+
+        if (parts[2].equalsIgnoreCase("N")){
+            harmony = null;
+        } else {
+            harmony = new JNote(parts[2]);
+        }
+
+        JNoteInfoTrio nit = new JNoteInfoTrio(note,root,harmony);
 
         lst.add(nit);
         System.out.println("n: " + nit.nt + ", r: " + nit.rt + ", h: " + nit.hmy + ", key: " + key);
@@ -67,6 +82,7 @@ public class JNoteInfoReader {
             System.out.println("Key is in: " + parts[1]);
             key = parts[1];
             while ((line = br.readLine())!=null){
+                System.out.println(line);
                 addToLst(line);
             }
 
