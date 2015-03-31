@@ -12,20 +12,18 @@ import java.util.ArrayList;
  */
 public class JNoteInfoReader {
 
-    public static ArrayList<NoteInfoTetra> lst = new ArrayList<NoteInfoTetra>();
+    public static ArrayList<JNoteInfoTrio> lst = new ArrayList<JNoteInfoTrio>();
     public static String key = "";
 
-    public static class NoteInfoTetra
+    public static class JNoteInfoTrio
     {
-        public int nt; // note
-        public int ln; // length
-        public int rt; // root note of current chord
-        public int hmy; // harmony of note
+        public JNote nt; // note
+        public JNote rt; // root note of current chord
+        public JNote hmy; // harmony of note
 
-        private NoteInfoTetra(int ntIn, int lnIn, int rtIn, int hmyIn)
+        private JNoteInfoTrio(JNote ntIn, JNote rtIn, JNote hmyIn)
         {
             nt = ntIn;
-            ln = lnIn;
             rt = rtIn;
             hmy= hmyIn;
         }
@@ -34,13 +32,10 @@ public class JNoteInfoReader {
     public static void addToLst(String ln){
         String[] parts = ln.split(" ");
 
-        int n = Integer.parseInt(parts[0]);
-        int l = Integer.parseInt(parts[1]);
-        int r = Integer.parseInt(parts[2]);
-        int h = Integer.parseInt(parts[3]);
-        NoteInfoTetra nit = new NoteInfoTetra(n,l,r,h);
+        JNoteInfoTrio nit = new JNoteInfoTrio(new JNote(parts[0]),new JNote(parts[1]),new JNote(parts[2]));
+
         lst.add(nit);
-        System.out.println("n: " + n + ", l: " + l + ", r: " + r + ", h: " + h + ", key: " + key);
+        System.out.println("n: " + nit.nt + ", r: " + nit.rt + ", h: " + nit.hmy + ", key: " + key);
     }
 
     public static void main(String args[]){
