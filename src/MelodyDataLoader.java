@@ -6,25 +6,25 @@ import java.util.ArrayList;
  * After this, it is then dumped onto whatever Harmony Data Set you wish.
  * Created by jolpatrik on 15-02-23.
  */
-public class InputDataLoader {
+public class MelodyDataLoader {
 
     //TODO: test this class
 
     final boolean DEBUG = true;
     ArrayList<NoteInfo> data;
 
-    public InputDataLoader(){
+    public MelodyDataLoader(){
         data = new ArrayList<NoteInfo>();
     }
 
-    public void populateWithDataFile(String pathToFile){
+    public void loadDataFile(String pathToFile){
         int previousSize = data.size();
         int newSize;
 
         try { NoteInfoReader.readInDataFile(pathToFile);
         } catch (IOException e){System.err.print(e.getMessage());}
 
-        if (DEBUG){System.out.println("populateWithDataFile");}
+        if (DEBUG){System.out.println("loadDataFile");}
 
          for ( NoteInfoReader.NoteInfoTetra tetra : NoteInfoReader.lst){
 
@@ -54,8 +54,8 @@ public class InputDataLoader {
 
     }
 
-    public HarmonyDataSet populateInputSet(HarmonyDataSet hds, String pathToFile) {
-        populateWithDataFile(pathToFile);
+    public HarmonyDataSet populateMelodySet(HarmonyDataSet hds, String pathToFile) {
+        loadDataFile(pathToFile);
         System.out.println("DATASET SIZE: " + hds.dataset.size());
         hds.dataset.addAll(data);
 

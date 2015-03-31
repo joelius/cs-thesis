@@ -1,18 +1,23 @@
+import org.jfugue.Pattern;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Harmony Data Loader is a bucket into which the data is dumped.
- * After this, it is then dumped onto whatever Harmony Data Set you wish.
+ * JFugue Data Loader is a bucket into which the data is dumped.
+ * After this, it is then turned into a JFugue java file.
  * Created by jolpatrik on 15-02-23.
  */
-public class HarmonyDataLoader {
+public class JFugueDataLoader {
 
+    char key;
     final boolean DEBUG = true;
     ArrayList<NoteInfo> data;
+    ArrayList<String> patternStringArray;
 
-    public HarmonyDataLoader(){
+    public JFugueDataLoader(){
         data = new ArrayList<NoteInfo>();
+        patternStringArray = new ArrayList<String>();
     }
 
     public void populateWithDataFile(String pathToFile){
@@ -24,32 +29,26 @@ public class HarmonyDataLoader {
 
         if (DEBUG){System.out.println("loadDataFile");}
 
-        int[] trend;
+        String tempPattern = "";
+        float totalBeats = 0;
+        float currentNoteLength = 0;
 
         for ( NoteInfoReader.NoteInfoTetra tetra : NoteInfoReader.lst){
 
-        if (DEBUG){System.out.println("Tetra. Note: " + tetra.nt + " Root: " + tetra.rt + " Harmony: " + tetra.hmy);}
+            if (currentNoteLength == 0) {
+
+            }
+
+            currentNoteLength += ( 1 / tetra.ln );
+
+            tempPattern += NoteUtil.getMusicalNote(3,'F', true);
+
+            if (DEBUG){System.out.println("Tetra. Note: " + tetra.nt + " Length: " + tetra.ln + " Root: " + tetra.rt + " Harmony: " + tetra.hmy);}
+
+            currentNoteLength = (1 / tetra.ln);
 
             int numberOfPreviousNotes = data.size();
-            if (numberOfPreviousNotes < 1){ // if statements to set trend of previous harmonies
-                trend = new int[] {0,0,0};
-            }
-            else if (numberOfPreviousNotes == 1) {
-                NoteInfo temp = data.get(0);
-                trend = new int[] {0,0, temp.getHarmony()-temp.getNote()};
-            }
-            else if (numberOfPreviousNotes == 2) {
-                NoteInfo temp = data.get(0);
-                NoteInfo temp2 = data.get(1);
-                trend = new int[] {0, temp.getHarmony()-temp.getNote(), temp2.getHarmony()-temp2.getNote()};
-            }
-            else{
-                NoteInfo temp = data.get(numberOfPreviousNotes-3);
-                NoteInfo temp2 = data.get(numberOfPreviousNotes-2);
-                NoteInfo temp3 = data.get(numberOfPreviousNotes-1);
-                trend = new int[] {temp.getHarmony()-temp.getNote(), temp2.getHarmony()-temp2.getNote(), temp3.getHarmony()-temp3.getNote()};
-            }
-            data.add(new NoteInfo(tetra.nt, tetra.ln, tetra.rt, tetra.hmy, NoteInfoReader.key, trend));
+
             if (DEBUG) {System.out.println("Size of data: " + data.size());}
         }
         if (DEBUG){System.out.println("Size of lst: " + NoteInfoReader.lst.size());}

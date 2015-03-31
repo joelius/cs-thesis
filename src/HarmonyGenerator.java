@@ -9,9 +9,6 @@ import java.util.List;
  */
 public class HarmonyGenerator {
 
-    private ArrayList<NoteInfo> attributes;
-    private ArrayList<NoteInfo> yVals;
-
     private HarmonyDataSet hds;
     private HarmonyDataSet inputMelodies;
     private HarmonyDataSet output;

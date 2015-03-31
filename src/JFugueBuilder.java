@@ -1,6 +1,9 @@
+import org.jfugue.Pattern;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by jol on 15-03-09.
@@ -9,6 +12,15 @@ public class JFugueBuilder {
 
     private static String jfugueFile;
     String file = "SongTest.java";
+
+    String header = "import org.jfugue.*;\n" +
+            "public class SongTest\n" +
+            "{\n" +
+            "    public static void main(String[] args)\n" +
+            "    {\n" +
+            "\n";
+
+    ArrayList<Pattern> patternArray;
 
     public JFugueBuilder (String stuff){
         jfugueFile = stuff;
