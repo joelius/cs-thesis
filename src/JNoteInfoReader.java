@@ -14,6 +14,7 @@ public class JNoteInfoReader {
 
     public static ArrayList<JNoteInfoTrio> lst = new ArrayList<JNoteInfoTrio>();
     public static String key = "";
+    public static String timeSig = "";
 
     public static class JNoteInfoTrio
     {
@@ -79,8 +80,11 @@ public class JNoteInfoReader {
             }
 
             String parts[] = line.split(": ");
-            System.out.println("Key is in: " + parts[1]);
             key = parts[1];
+            timeSig = parts[2];
+            System.out.println("Key is: " + key);
+            System.out.println("Time signature is: " + timeSig);
+
             while ((line = br.readLine())!=null){
                 System.out.println(line);
                 addToLst(line);

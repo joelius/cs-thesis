@@ -10,6 +10,8 @@ public class JFugueInputLoader {
 
     char key;
     boolean keyIsMajor;
+    int BEATS_PER_MEASURE;
+    int BEAT_LENGTH;
     final boolean DEBUG = true;
     ArrayList<NoteInfo> data;
     ArrayList<String> patternStringArray;
@@ -20,23 +22,14 @@ public class JFugueInputLoader {
     }
 
     public void populateWithDataFile(String pathToFile){
-        int previousSize = data.size();
-        int newSize;
 
         try { JNoteInfoReader.readInDataFile(pathToFile);
         } catch (IOException e){System.err.print(e.getMessage());}
 
         if (DEBUG){System.out.println("loadDataFile");}
 
-        String[] keyAndMajMin = JNoteInfoReader.key.split("-");
-
-        key = keyAndMajMin[0].charAt(0);
-        if (keyAndMajMin[1].charAt(0)=='M'){
-            keyIsMajor = true;
-        }
-        else {
-            keyIsMajor = false;
-        }
+        parseKey(JNoteInfoReader.key);
+        parseTimeSig(JNoteInfoReader.timeSig);
 
         String tempV0Melody = "V0 ";
         String tempV1RootNotes = "V1 ";
@@ -44,20 +37,19 @@ public class JFugueInputLoader {
         float currentNoteLength = 0;
         float noteLength;
 
-
         for ( JNoteInfoReader.JNoteInfoTrio trio : JNoteInfoReader.lst) {
             noteLength = (float) trio.nt.getDuration();
 
-            if (currentNoteLength >= 4) {
+            if (currentNoteLength >= BEATS_PER_MEASURE) {
                 tempV0Melody += "\" +\n \"| ";
                 tempV1RootNotes += "\" +\n \"| ";
                 tempV2Harmony += "\" +\n \"| ";
                 currentNoteLength = 0;
             } 
 
-            currentNoteLength += (4 / noteLength);
+            currentNoteLength += (BEAT_LENGTH / noteLength);
             if (DEBUG) System.out.println("trio.ln: " + noteLength);
-            if (DEBUG) System.out.println("4/trio.ln: " + (4 / noteLength));
+            if (DEBUG) System.out.println(BEAT_LENGTH + "/trio.ln: " + (BEAT_LENGTH / noteLength));
             if (DEBUG) System.out.println("currentNoteLength: " + currentNoteLength);
             if (DEBUG) System.out.println("tempPattern: " + tempV0Melody);
 
@@ -97,6 +89,24 @@ public class JFugueInputLoader {
 
     }
 
+    public void parseKey(String input){
+        String[] keyAndMajMin = input.split("-");
+
+        key = keyAndMajMin[0].charAt(0);
+        if (keyAndMajMin[1].charAt(0)=='M'){
+            keyIsMajor = true;
+        }
+        else {
+            keyIsMajor = false;
+        }
+    }
+
+    public void parseTimeSig(String input){
+        String[] timeSignature = input.split("-");
+
+        BEATS_PER_MEASURE = Integer.parseInt(timeSignature[0]);
+        BEAT_LENGTH = Integer.parseInt(timeSignature[1]);
+    }
 
     public ArrayList<NoteInfo> getData() {
         return data;

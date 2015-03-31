@@ -8,8 +8,8 @@ public class JNoteInputToOutputTest {
 
     @Test
     public void testCreateJFugueFileFromInput() throws Exception {
-        String filename = "JFugueTest1";
-        String inputPath = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/jinput5.txt";
+        String filename = "JFugueTest2";
+        String inputPath = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/jinput6bpm.txt";
         JFugueInputLoader jil = new JFugueInputLoader();
         jil.populateWithDataFile(inputPath);
         JFugueBuilder test = new JFugueBuilder("what");
