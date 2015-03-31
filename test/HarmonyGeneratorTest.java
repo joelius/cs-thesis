@@ -11,8 +11,8 @@ public class HarmonyGeneratorTest {
         HarmonyDataSet melodies = new HarmonyDataSet();
         HarmonyDataSet output = new HarmonyDataSet();
         HarmonyDataLoader hdl = new HarmonyDataLoader();
-        String file1 = "/Users/jol/Dropbox/IdeaProjects/jfugue-tst/src/data/input.txt";
-    //    String file1 = "/Users/jolpatrik/IdeaProjects/jfugue-tst/src/data/input.txt";
+        //String file1 = "/Users/jol/Dropbox/IdeaProjects/jfugue-tst/src/data/input.txt";
+        String file1 = "/Users/jolpatrik/IdeaProjects/cs-thesis/src/data/input.txt";
         hdl.populateDataSet(hds, file1);
 
         assertNotEquals(0, hds.dataset.size());
@@ -37,8 +37,8 @@ public class HarmonyGeneratorTest {
         HarmonyDataSet hds = new HarmonyDataSet();
         HarmonyDataSet melodies = new HarmonyDataSet();
         MelodyDataLoader mdl = new MelodyDataLoader();
-        String file2 = "/Users/jol/Dropbox/IdeaProjects/jfugue-tst/src/data/input2.txt";
-        //    String file1 = "/Users/jolpatrik/IdeaProjects/jfugue-tst/src/data/input.txt";
+        //String file2 = "/Users/jol/Dropbox/IdeaProjects/jfugue-tst/src/data/input2.txt";
+        String file2 = "/Users/jolpatrik/IdeaProjects/cs-thesis/src/data/input.txt";
         mdl.populateMelodySet(melodies, file2);
 
         assertNotEquals(0, hds.dataset.size());

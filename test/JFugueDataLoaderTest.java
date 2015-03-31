@@ -6,7 +6,9 @@ public class JFugueDataLoaderTest {
 
     @Test
     public void testPopulateWithDataFile() throws Exception {
-
+        JFugueDataLoader jdl = new JFugueDataLoader();
+        jdl.populateWithDataFile("/Users/jolpatrik/IdeaProjects/harmonator/src/data/input.txt");
+        assertEquals(0,jdl.patternStringArray.size() );
     }
 
     @Test

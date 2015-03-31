@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class JFugueDataLoader {
 
     char key;
+    boolean keyIsMajor;
     final boolean DEBUG = true;
     ArrayList<NoteInfo> data;
     ArrayList<String> patternStringArray;
@@ -29,57 +30,85 @@ public class JFugueDataLoader {
 
         if (DEBUG){System.out.println("loadDataFile");}
 
+        String[] keyAndMajMin = NoteInfoReader.key.split("-");
+
+        key = keyAndMajMin[0].charAt(0);
+        if (keyAndMajMin[1].charAt(0)=='M'){
+            keyIsMajor = true;
+        }
+        else {
+            keyIsMajor = false;
+        }
+
         String tempPattern = "";
         float totalBeats = 0;
         float currentNoteLength = 0;
+        float noteLength;
 
-        for ( NoteInfoReader.NoteInfoTetra tetra : NoteInfoReader.lst){
 
-            if (currentNoteLength == 0) {
+        for ( NoteInfoReader.NoteInfoTetra tetra : NoteInfoReader.lst) {
+            noteLength = (float) tetra.ln;
 
+            if (currentNoteLength == 4) {
+                patternStringArray.add(tempPattern);
+                tempPattern = "";
+                currentNoteLength = 0;
+
+                currentNoteLength += (4 / noteLength);
+                tempPattern += NoteUtil.getMusicalNote(tetra.nt, key, keyIsMajor);
+                tempPattern += "5";
+                tempPattern += NoteUtil.getLengthAsMusicalValue(tetra.ln);
+                tempPattern += " ";
+
+            } else if (currentNoteLength > 4) {
+                System.out.print("adfsjdasfdafsjkadfs;kdfsalf;adslkadfs;lkdafsdafsdafsjkdasffadsadsfkladkflsadfsjkadsfadfsfdsdasfdafskdasfdkl");
+                float difference = currentNoteLength - 4;
+                float differenceNumeral = 4 / difference;
+                int diffNumeral = (int) differenceNumeral;
+
+                patternStringArray.add(tempPattern);
+                tempPattern = "R";
+                tempPattern += NoteUtil.getLengthAsMusicalValue(diffNumeral);
+                tempPattern += " ";
+
+                currentNoteLength = 0;
             }
+            else {
+                currentNoteLength += (4 / noteLength);
+                if (DEBUG) System.out.println("tetra.ln: " + noteLength);
+                if (DEBUG) System.out.println("4/tetra.ln: " + (4 / noteLength));
+                if (DEBUG) System.out.println("currentNoteLength: " + currentNoteLength);
+                if (DEBUG) System.out.println("tempPattern: " + tempPattern);
 
-            currentNoteLength += ( 1 / tetra.ln );
+                tempPattern += NoteUtil.getMusicalNote(tetra.nt, key, keyIsMajor);
 
-            tempPattern += NoteUtil.getMusicalNote(3,'F', true);
+                tempPattern += "5";
 
-            if (DEBUG){System.out.println("Tetra. Note: " + tetra.nt + " Length: " + tetra.ln + " Root: " + tetra.rt + " Harmony: " + tetra.hmy);}
+                tempPattern += NoteUtil.getLengthAsMusicalValue(tetra.ln);
 
-            currentNoteLength = (1 / tetra.ln);
+                tempPattern += " ";
 
-            int numberOfPreviousNotes = data.size();
-
-            if (DEBUG) {System.out.println("Size of data: " + data.size());}
+//                if(DEBUG)System.out.println("Tetra. Note: " + tetra.nt + " Length: " + tetra.ln + " Root: " + tetra.rt + " Harmony: " + tetra.hmy);
+            }
         }
+        patternStringArray.add(tempPattern);
+
+
         if (DEBUG){System.out.println("Size of lst: " + NoteInfoReader.lst.size());}
 
-        newSize = data.size();
-
-        if ((newSize-previousSize)==NoteInfoReader.lst.size())
-        {
-            if (DEBUG){System.out.println("Totals match. Clearing lst");}
-            //clear NoteInfoReader list.
-            NoteInfoReader.lst.clear();
+        for (String pattern : patternStringArray){
+            System.out.println(pattern);
         }
-        else{
-            System.out.println("Totals do not match. Discrepancy between lst and data.");
 
-        }
+        if (DEBUG){System.out.println("Clearing lst (Emptying temporary data store).");}
+        //clear NoteInfoReader list.
+        NoteInfoReader.lst.clear();
+
 
         if (DEBUG){System.out.println("Size of lst: " + NoteInfoReader.lst.size());}
 
     }
-
-    public HarmonyDataSet populateDataSet(HarmonyDataSet hds, String pathToFile) {
-        populateWithDataFile(pathToFile);
-        System.out.println("DATASET SIZE: " + hds.dataset.size());
-        hds.dataset.addAll(data);
-
-        System.out.println("DATASET SIZE after add all: " + hds.dataset.size());
-        data.clear();
-
-        return hds;
-    }
+    
 
     public ArrayList<NoteInfo> getData() {
         return data;

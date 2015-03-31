@@ -44,14 +44,21 @@ public final class NoteUtil {
 
         for (int i=0;i<12;i++){
             offsetNotes[(i+offset)%12]=notes[i];
-            System.out.println("=====" + i + " " + notes[i] + "," + (i+offset) + ", " + ((i+offset)%12));
-            for (int j=0;j<12;j++){
-                System.out.println("| " + j + " |" + notes[j] + " | " + offsetNotes[j]);
-            }
         }
-        for (int j=0;j<12;j++){
-            System.out.println("| " + j + " |" + notes[j] + " | " + offsetNotes[j]);
+
+    }
+
+    public static String getLengthAsMusicalValue(int length){
+        String result;
+        switch (length){
+            case 4: result = "q"; break;
+            case 2: result = "h"; break;
+            case 1: result = "w"; break;
+            case 8: result = "e"; break;
+            case 16: result = "s"; break;
+            default: result = "X"; break;
         }
+        return result;
     }
 
 }
