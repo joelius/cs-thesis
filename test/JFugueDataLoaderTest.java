@@ -8,7 +8,8 @@ public class JFugueDataLoaderTest {
     public void testPopulateWithDataFile() throws Exception {
         JFugueDataLoader jdl = new JFugueDataLoader();
         jdl.populateWithDataFile("/Users/jolpatrik/IdeaProjects/harmonator/src/data/input.txt");
-        assertEquals(0,jdl.patternStringArray.size() );
+        assertEquals(10,jdl.patternStringArray.size() );
+        assertEquals("C5q D5q E5q D5q ",jdl.patternStringArray.get(0));
     }
 
     @Test

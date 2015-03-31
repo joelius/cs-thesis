@@ -6,10 +6,13 @@ public class JFugueBuilderTest {
     @Test
     public void testWriter(){
 
+        String filename = "ThisNewFile";
+        JFugueDataLoader jdl = new JFugueDataLoader();
+        jdl.populateWithDataFile("/Users/jolpatrik/IdeaProjects/harmonator/src/data/input.txt");
         JFugueBuilder test = new JFugueBuilder("what");
 
         try {
-            test.writeFile("junk");
+            test.writeFile(jdl.patternStringArray, filename);
         }
         catch (Exception e){
             System.out.println(e.getMessage());

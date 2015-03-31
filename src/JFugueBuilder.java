@@ -11,28 +11,33 @@ import java.util.ArrayList;
 public class JFugueBuilder {
 
     private static String jfugueFile;
-    String file = "SongTest.java";
+    String file, header, body = "";
 
-    String header = "import org.jfugue.*;\n" +
-            "public class SongTest\n" +
-            "{\n" +
-            "    public static void main(String[] args)\n" +
-            "    {\n" +
-            "\n";
+    final String footer = "\n" +
+            "// Play the song!\\n\" +\n" +
+            "Player player = new Player();\n player.play(song);\n" +
+            "\n" + "\n" +
+            "}\n" + "\n" +
+            "}";
 
-    ArrayList<Pattern> patternArray;
 
     public JFugueBuilder (String stuff){
         jfugueFile = stuff;
     }
 
     // TODO: test this method & finish it, too
-    public void writeFile(String stuff) throws IOException {
+    public void writeFile(ArrayList<String> patternArrayListIn, String filename) throws IOException {
 
-
+        generateFilename(filename);
+        generateHeader(filename);
+        generateBody(patternArrayListIn);
 
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-        bw.write("import org.jfugue.*;\n" +
+        bw.write(header);
+        bw.write(body);
+        bw.write(footer);
+
+        /** bw.write("import org.jfugue.*;\n" +
                 "public class SongTest\n" +
                 "{\n" +
                 "    public static void main(String[] args)\n" +
@@ -61,10 +66,34 @@ public class JFugueBuilder {
                 "        Player player = new Player(); player.play(song);\n" +
                 "\n" +
                 "    }\n" +
-                "}\n");
+                "}\n"); */
         bw.close();
 
     }
 
+    private void generateFilename(String name){
+        file = name + ".java";
+    }
 
+    private void generateHeader(String name){
+        header = "import org.jfugue.*;\n" +
+                "public class " + name + "\n" +
+                "{\n" +
+                "    public static void main(String[] args)\n" +
+                "    {\n" +
+                "\n" + "Pattern song = new Pattern();\n";
+
+    }
+
+    private void generateBody(ArrayList<String> patternStringArrayIn){
+        String temp = "";
+        int i = 0;
+        for (String pattern : patternStringArrayIn){
+            temp += "Pattern pattern" + i + " = new Pattern(\"" + pattern + "\");\n" +
+                    "\n" + "song.add(pattern" + i + ", 1);\n";
+
+            i++;
+        }
+        body = temp;
+    }
 }

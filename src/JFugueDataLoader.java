@@ -108,7 +108,7 @@ public class JFugueDataLoader {
         if (DEBUG){System.out.println("Size of lst: " + NoteInfoReader.lst.size());}
 
     }
-    
+
 
     public ArrayList<NoteInfo> getData() {
         return data;
