@@ -90,7 +90,7 @@ public class JFugueBuilder {
         int i = 0;
         for (String pattern : patternStringArrayIn){
             temp += "Pattern pattern" + i + " = new Pattern(\"" + pattern + "\");\n" +
-                    "\n" + "song.add(pattern" + i + ", 1);\n";
+                    "song.add(pattern" + i + ", 1);\n\n";
 
             i++;
         }

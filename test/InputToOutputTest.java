@@ -8,9 +8,9 @@ import static org.junit.Assert.assertNotNull;
 public class InputToOutputTest {
 
     @Test
-    public void testGetMusicalNote() throws Exception {
+    public void testCreateJFugueFileFromInput() throws Exception {
         String filename = "ThisOtherNewFile";
-        String inputPath = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/input.txt";
+        String inputPath = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/input3.txt";
         JFugueDataLoader jdl = new JFugueDataLoader();
         jdl.populateWithDataFile(inputPath);
         JFugueBuilder test = new JFugueBuilder("what");

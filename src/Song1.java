@@ -5,7 +5,7 @@ public class Song1
     {
 
 //"Frere Jacques"
-        Pattern pattern1 = new Pattern("C5q D5q E5q C5q");
+        Pattern pattern1 = new Pattern("C5q D5q E5q C5h | E5q F5q G5h");
 
 //"Dormez-vous?"
         Pattern pattern2 = new Pattern("E5q F5q G5h");

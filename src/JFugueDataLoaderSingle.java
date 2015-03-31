@@ -1,5 +1,3 @@
-import org.jfugue.Pattern;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -8,7 +6,7 @@ import java.util.ArrayList;
  * After this, it is then turned into a JFugue java file.
  * Created by jolpatrik on 15-02-23.
  */
-public class JFugueDataLoader {
+public class JFugueDataLoaderSingle {
 
     char key;
     boolean keyIsMajor;
@@ -16,7 +14,7 @@ public class JFugueDataLoader {
     ArrayList<NoteInfo> data;
     ArrayList<String> patternStringArray;
 
-    public JFugueDataLoader(){
+    public JFugueDataLoaderSingle(){
         data = new ArrayList<NoteInfo>();
         patternStringArray = new ArrayList<String>();
     }
@@ -40,8 +38,8 @@ public class JFugueDataLoader {
             keyIsMajor = false;
         }
 
-        String tempPatternV0 = "";
-        String tempPatternV1 = "";
+        String tempPatternV0 = "V0 ";
+        String tempPatternV1 = "V1 ";
         float totalBeats = 0;
         float currentNoteLength = 0;
         float noteLength;
@@ -51,36 +49,40 @@ public class JFugueDataLoader {
             noteLength = (float) tetra.ln;
 
             if (currentNoteLength >= 4) {
-                patternStringArray.add(tempPatternV0);
-                tempPatternV0 = "";
+                tempPatternV0 += "\" +\n \"| ";
+                tempPatternV1 += "\" +\n \"| ";
                 currentNoteLength = 0;
+            } 
 
-                currentNoteLength += (4 / noteLength);
-                tempPatternV0 += NoteUtil.getMusicalNote(tetra.nt, key, keyIsMajor);
-                tempPatternV0 += "5";
-                tempPatternV0 += NoteUtil.getLengthAsMusicalValue(tetra.ln);
-                tempPatternV0 += " ";
+            currentNoteLength += (4 / noteLength);
+            if (DEBUG) System.out.println("tetra.ln: " + noteLength);
+            if (DEBUG) System.out.println("4/tetra.ln: " + (4 / noteLength));
+            if (DEBUG) System.out.println("currentNoteLength: " + currentNoteLength);
+            if (DEBUG) System.out.println("tempPattern: " + tempPatternV0);
 
+            tempPatternV0 += NoteUtil.getMusicalNote(tetra.nt, key, keyIsMajor);
+            tempPatternV0 += "5";
+            tempPatternV0 += NoteUtil.getLengthAsMusicalValue(tetra.ln);
+            tempPatternV0 += " ";
+
+            if (tetra.hmy >= 0) {
+                tempPatternV1 += NoteUtil.getMusicalNote(tetra.hmy, key, keyIsMajor);
+                tempPatternV1 += "5";
             }
             else {
-                currentNoteLength += (4 / noteLength);
-                if (DEBUG) System.out.println("tetra.ln: " + noteLength);
-                if (DEBUG) System.out.println("4/tetra.ln: " + (4 / noteLength));
-                if (DEBUG) System.out.println("currentNoteLength: " + currentNoteLength);
-                if (DEBUG) System.out.println("tempPattern: " + tempPatternV0);
+                tempPatternV1 += "R";
+            }
 
-                tempPatternV0 += NoteUtil.getMusicalNote(tetra.nt, key, keyIsMajor);
+            tempPatternV1 += NoteUtil.getLengthAsMusicalValue(tetra.ln);
+            tempPatternV1 += " ";
 
-                tempPatternV0 += "5";
-
-                tempPatternV0 += NoteUtil.getLengthAsMusicalValue(tetra.ln);
-
-                tempPatternV0 += " ";
 
 //                if(DEBUG)System.out.println("Tetra. Note: " + tetra.nt + " Length: " + tetra.ln + " Root: " + tetra.rt + " Harmony: " + tetra.hmy);
-            }
+
+
         }
         patternStringArray.add(tempPatternV0);
+        patternStringArray.add(tempPatternV1);
 
 
         if (DEBUG){System.out.println("Size of lst: " + NoteInfoReader.lst.size());}
