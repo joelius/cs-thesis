@@ -1,0 +1,23 @@
+# Note, length, root note, harmony
+# These are random numbers, for testing.
+Key and signature: F-M: 3-2
+A4h F2h C5h
+C5h A2h F5h
+E5h C3h G5h
+F5q F3q A5q
+C5h A3h F5h
+E5q C4q G5q
+F5q F4q A5q
+C5q A3q F5q
+E5q C4q G5q
+G4h E3h C6h
+E5q C3q G5q
+F5q F3q A5q
+C5q A2q F5q
+E5q C3q G5q
+G4h E3h C6h
+E5q C3q G5q
+F5q F3q A5q
+C5q A3q F5q
+G5q C3h E5h
+C5h L N

@@ -1,0 +1,40 @@
+# Note, length, root note, harmony
+# These are random numbers, for testing.
+Key and signature: C-M: 8-4
+C5q C4w E5q
+D5q L F5q
+E5q L G5q
+D5q L F5q
+C5q C4q E5q
+G5q B3w C6q
+B5q L C6q
+A5q L E6q
+F5q L D6q
+E5q B3h D6q
+D5q L C6q
+F5q A3h G5q
+G5q L B5q
+A5q L D6q
+D5q L F5q
+F5q A3h A5q
+A5q L D6q
+D5q A3q A5q
+F5q E4w C6q
+D5q L E6q
+G5q L A5q
+F5q L B5q
+D5q A3h E6q
+E5q L C6q
+F5q L D6q
+G5q D4w E6q
+D5q L G5q
+G5q L A5q
+D5q L E5q
+C5q F4w E5q
+C5q L D5q
+C5q L D5q
+C5q L C5q
+C5q F4q D5q
+C5q A3q E5q
+C5q B3q E5q
+C5q A3q E5q

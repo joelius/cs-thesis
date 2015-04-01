@@ -56,7 +56,7 @@ public class JNote {
             case 'w' : result = 1; break;
             case 'h' : result = 2; break;
             case 'q' : result = 4; break;
-            case 'e' : result = 8; break;
+            case 'i' : result = 8; break;
             case 's' : result = 16; break;
             default  : result = 32; break;
         }

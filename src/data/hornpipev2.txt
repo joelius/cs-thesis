@@ -1,0 +1,25 @@
+# Note, length, root note, harmony
+# These are random numbers, for testing.
+Key and timesig: A-m: 3-2
+C5h F2h A4h 
+F5h A2h C5h 
+G5h C3h E5h 
+A5q F3q F5q 
+F5h A3h C5h 
+G5q C4q E5q 
+A5q F4q F5q 
+F5q A3q C5q
+G5q C4q E5q
+C6h E3h G4h 
+G5q C3q E5q 
+A5q F3q F5q 
+G5i A2q C5q
+F5i L N
+G5q C3q E5q
+C6h E3h G4h 
+G5q C3q E5q 
+A5q F3q F5q 
+G5i A3q C5q
+F5i L N 
+E5h C3h G5q 
+C5h L N
