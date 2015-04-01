@@ -16,20 +16,6 @@ public class JNoteInfoReader {
     public static String key = "";
     public static String timeSig = "";
 
-    public static class JNoteInfoTrio
-    {
-        public JNote nt; // note
-        public JNote rt; // root note of current chord
-        public JNote hmy; // harmony of note
-
-        private JNoteInfoTrio(JNote ntIn, JNote rtIn, JNote hmyIn)
-        {
-            nt = ntIn;
-            rt = rtIn;
-            hmy= hmyIn;
-        }
-    }
-
     public static void addToLst(String ln){
         String[] parts = ln.split(" ");
         JNote note, root, harmony;

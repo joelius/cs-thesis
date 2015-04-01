@@ -37,7 +37,7 @@ public class JFugueInputLoader {
         float currentNoteLength = 0;
         float noteLength;
 
-        for ( JNoteInfoReader.JNoteInfoTrio trio : JNoteInfoReader.lst) {
+        for ( JNoteInfoTrio trio : JNoteInfoReader.lst) {
             noteLength = (float) trio.nt.getDuration();
 
             if (currentNoteLength >= BEATS_PER_MEASURE) {

@@ -55,7 +55,7 @@ public final class NoteUtil {
             case 4: result = "q"; break;
             case 2: result = "h"; break;
             case 1: result = "w"; break;
-            case 8: result = "e"; break;
+            case 8: result = "i"; break;
             case 16: result = "s"; break;
             default: result = "X"; break;
         }

@@ -28,7 +28,16 @@ public class JNote {
         stringRepresentation = stringIn;
     }
 
-    public int getIntegerRepresentation(){
+    public JNote (){
+        note = 'C';
+        isSharp = false;
+        indexOffset = 0;
+        octave = 4;
+        duration = 'q';
+        stringRepresentation = "C4q";
+    }
+
+    public int asInt(){
         int result = 0;
         int octaveOffset;
 

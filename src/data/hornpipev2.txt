@@ -21,5 +21,5 @@ G5q C3q E5q
 A5q F3q F5q 
 G5i A3q C5q
 F5i L N 
-E5h C3h G5q 
+E5q C3h G5q
 C5h L N
