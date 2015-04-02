@@ -56,7 +56,7 @@ public class HashMapEngine extends HarmonyGenerationEngine {
         hmyNote = brain.get(hKey);
 
         jNoteString = JNote.jNoteStringBuilder(hmyNote,input.key,input.nt);
-        
+
         result = new JNote(jNoteString);
 
         return result;

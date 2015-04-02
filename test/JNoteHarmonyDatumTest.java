@@ -1,5 +1,8 @@
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 /**
@@ -7,16 +10,25 @@ import static org.junit.Assert.*;
  */
 public class JNoteHarmonyDatumTest {
 
+    JNote n1 = new JNote("C5q");
+    JNote n2 = new JNote("D5q");
+    JNote n3 = new JNote("E5q");
+
     @Test
     public void testProcessIntervalTrend() throws Exception {
-        int[] test = {3,4,3,4};
-        double result = 3.5;
-        JNoteHarmonyDatum test1 = new JNoteHarmonyDatum(null,null,null,test,"");
-        assertEquals(result,test1.processIntervalTrend(test),0.0);
+        Integer[] testA = {3,4,3,4,3};
+        int result = 3;
+        ArrayList<Integer> test = new ArrayList<Integer>(Arrays.asList(testA));
 
-        int[] test2 = {1,4,2,4,4};
-        double result2 = 3;
-        JNoteHarmonyDatum test3 = new JNoteHarmonyDatum(null,null,null,test2,"");
-        assertEquals(result2, test3.processIntervalTrend(test2), 0.0);
+        JNoteHarmonyDatum test1 = new JNoteHarmonyDatum(n1,n2,n3,test,"");
+        assertEquals(result, test1.processIntervalTrend());
+
+        Integer[] testA2 = {1,4,2,4,4};
+        int result2 = 4;
+
+        ArrayList<Integer> test2 = new ArrayList<Integer>(Arrays.asList(testA2));
+
+        JNoteHarmonyDatum test3 = new JNoteHarmonyDatum(n1,n3,n2,test2,"");
+        assertEquals(result2, test3.processIntervalTrend());
     }
 }

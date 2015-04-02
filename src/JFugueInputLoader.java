@@ -23,13 +23,15 @@ public class JFugueInputLoader {
 
     public void populateWithDataFile(String pathToFile){
 
-        try { JNoteInfoReader.readInDataFile(pathToFile);
+        JNoteInfoReader jnir = new JNoteInfoReader();
+
+        try { jnir.readInDataFile(pathToFile);
         } catch (IOException e){System.err.print(e.getMessage());}
 
         if (DEBUG){System.out.println("loadDataFile");}
 
-        parseKey(JNoteInfoReader.key);
-        parseTimeSig(JNoteInfoReader.timeSig);
+        parseKey(jnir.key);
+        parseTimeSig(jnir.timeSig);
 
         String tempV0Melody = "V0 ";
         String tempV1RootNotes = "V1 ";
@@ -37,7 +39,7 @@ public class JFugueInputLoader {
         float currentNoteLength = 0;
         float noteLength;
 
-        for ( JNoteInfoTrio trio : JNoteInfoReader.lst) {
+        for ( JNoteInfoTrio trio : jnir.lst) {
             noteLength = (float) trio.nt.getDuration();
 
             if (currentNoteLength >= BEATS_PER_MEASURE) {
@@ -74,7 +76,7 @@ public class JFugueInputLoader {
         patternStringArray.add(tempV2Harmony);
 
 
-        if (DEBUG){System.out.println("Size of lst: " + JNoteInfoReader.lst.size());}
+        if (DEBUG){System.out.println("Size of lst: " + jnir.lst.size());}
 
         for (String pattern : patternStringArray){
             System.out.println(pattern);
@@ -82,10 +84,10 @@ public class JFugueInputLoader {
 
         if (DEBUG){System.out.println("Clearing lst (Emptying temporary data store).");}
         //clear JNoteInfoReader list.
-        JNoteInfoReader.lst.clear();
+        jnir.lst.clear();
 
 
-        if (DEBUG){System.out.println("Size of lst: " + JNoteInfoReader.lst.size());}
+        if (DEBUG){System.out.println("Size of lst: " + jnir.lst.size());}
 
     }
 

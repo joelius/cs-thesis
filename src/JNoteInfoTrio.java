@@ -19,4 +19,14 @@ public class JNoteInfoTrio
         rt = null;
         hmy = null;
     }
+
+    public String toString(){
+        String note, root, harmony;
+
+        note = (nt==null) ? "-x-" : nt.toString();
+        root = (rt==null) ? "-x-" : rt.toString();
+        harmony = (hmy==null) ? "-x-" : hmy.toString();
+
+        return "JNoteInfoTrio: Note: " + note + " Root: " + root + " Harmony: " + harmony;
+    }
 }

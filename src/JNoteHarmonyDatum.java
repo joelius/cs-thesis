@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Created by jolpatrik on 15-02-23.
  */
@@ -6,15 +8,25 @@ public class JNoteHarmonyDatum extends JNoteInfoTrio {
     public int modeOfPrecedingIntervals;
     public int currentInterval;
     public String key;
+    public ArrayList<Integer> intervalTrend;
 
-    public JNoteHarmonyDatum(JNote nt, JNote rt, JNote hmy, int[] intervalTrend, String keyIn){
+    public JNoteHarmonyDatum(JNote nt, JNote rt, JNote hmy, ArrayList<Integer> intervalTrendIn, String keyIn){
         super (nt,rt,hmy);
-        modeOfPrecedingIntervals = processIntervalTrend(intervalTrend);
-        currentInterval = hmy.asInt() - nt.asInt();
+        intervalTrend = intervalTrendIn;
+        modeOfPrecedingIntervals = processIntervalTrend();
+        currentInterval = processCurrentInterval();
         key = keyIn;
     }
 
-    public int processIntervalTrend(int[] trendIn){
+    public int processCurrentInterval(){
+
+        return (hmy == null || nt == null) ? 0 : (hmy.asInt() - nt.asInt());
+
+    }
+
+    public int processIntervalTrend(){
+
+        Integer[] trendIn = intervalTrend.toArray(new Integer[intervalTrend.size()]);
 
         int t = 0;
         for(int i=0; i<trendIn.length; i++){
@@ -43,6 +55,19 @@ public class JNoteHarmonyDatum extends JNoteInfoTrio {
             }
         }
         return mode;
+    }
+
+    public String toString(){
+        String note, root, harmony;
+
+        note = (nt==null) ? "-x-" : nt.toString();
+        root = (rt==null) ? "-x-" : rt.toString();
+        harmony = (hmy==null) ? "-x-" : hmy.toString();
+
+        return "nt: " + note + ", rt: " + root + ", hmy: " + harmony +
+                ", modePI: " + modeOfPrecedingIntervals + ", amtPI: " + intervalTrend.size() +
+                ", key: " + key + ", curIvl" + currentInterval;
+
     }
 
 }

@@ -12,11 +12,19 @@ import java.util.ArrayList;
  */
 public class JNoteInfoReader {
 
-    public static ArrayList<JNoteInfoTrio> lst = new ArrayList<JNoteInfoTrio>();
-    public static String key = "";
-    public static String timeSig = "";
+    public ArrayList<JNoteInfoTrio> lst;
 
-    public static void addToLst(String ln){
+    public String key;
+    public String timeSig;
+
+    public JNoteInfoReader (){
+        lst = new ArrayList<JNoteInfoTrio>();
+        key = "";
+        timeSig = "";
+    }
+
+
+    public void addToLst(String ln){
         String[] parts = ln.split(" ");
         JNote note, root, harmony;
 
@@ -40,20 +48,8 @@ public class JNoteInfoReader {
         System.out.println("n: " + nit.nt + ", r: " + nit.rt + ", h: " + nit.hmy + ", key: " + key);
     }
 
-    public static void main(String args[]){
 
-        String file1 = "/Users/jolpatrik/IdeaProjects/jfugue-tst/src/data/input.txt";
-        try{
-            readInDataFile(file1);
-        }
-        catch (IOException ioe){
-            System.err.print(ioe.getMessage());
-        }
-
-
-    }
-
-    public static void readInDataFile(String path) throws IOException {
+    public void readInDataFile(String path) throws IOException {
         FileReader fr = new FileReader(path);
         BufferedReader br = new BufferedReader(fr);
 
