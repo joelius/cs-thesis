@@ -1,14 +1,14 @@
 /**
  * Created by jolpatrik on 15-02-23.
  */
-public class JNoteHarmonyDatum extends JNoteInfoTrio {
+public class JNoteMelodyDatum extends JNoteInfoTrio {
 
     public int modeOfPrecedingIntervals;
     public int currentInterval;
     public String key;
 
-    public JNoteHarmonyDatum(JNote nt, JNote rt, JNote hmy, int[] intervalTrend, String keyIn){
-        super (nt,rt,hmy);
+    public JNoteMelodyDatum(JNote nt, JNote rt, int[] intervalTrend, String keyIn){
+        super (nt,rt,null);
         modeOfPrecedingIntervals = processIntervalTrend(intervalTrend);
         currentInterval = hmy.asInt() - nt.asInt();
         key = keyIn;

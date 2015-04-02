@@ -31,4 +31,17 @@ public class JNoteTest {
     public void testGetDuration() throws Exception {
 
     }
+
+    @Test
+    public void testToCScale() throws Exception {
+        JNote test1 = new JNote("C5q");
+        assertEquals(0,test1.noteAsIntegerInCScale());
+
+        JNote test2 = new JNote("A5q");
+        assertEquals(9,test2.noteAsIntegerInCScale());
+
+        JNote test3 = new JNote("G5q");
+        assertEquals(7,test3.noteAsIntegerInCScale());
+
+    }
 }

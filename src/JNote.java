@@ -71,5 +71,13 @@ public class JNote {
         }
         return result;
     }
+
+    public char getDurationAsChar(){
+        return duration;
+    }
+
+    public int noteAsIntegerInCScale(){
+        return this.asInt() % 12;
+    }
 }
 
