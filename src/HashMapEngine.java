@@ -18,6 +18,13 @@ public class HashMapEngine extends HarmonyGenerationEngine {
             rootNoteOfCurrentChord = input.rt.noteAsIntegerInCScale();
             sizeOfInterval = input.modeOfPrecedingIntervals;
         }
+
+        private JNoteHashKey (JNoteMelodyDatum input){
+            noteInScale = input.nt.noteAsIntegerInCScale();
+            duration = input.nt.getDurationAsChar();
+            rootNoteOfCurrentChord = input.rt.noteAsIntegerInCScale();
+            sizeOfInterval = input.modeOfPrecedingIntervals;
+        }
     }
 
     private ArrayList<JNoteHarmonyDatum> harmonyDataSet;
@@ -38,8 +45,20 @@ public class HashMapEngine extends HarmonyGenerationEngine {
     }
 
     public JNote generateHarmony(JNoteMelodyDatum input){
-        JNote result = null;
-        JNoteHarmonyDatum datum = null;
+        JNote result;
+        String jNoteString;
+        int hmyNote;
+        int isInNextOctave = 0; //set to one if octave offset is necessary
+
+        int melodyNote = input.nt.noteAsIntegerInCScale();
+        JNoteHashKey hKey = new JNoteHashKey(input);
+
+        hmyNote = brain.get(hKey);
+
+        jNoteString = JNote.jNoteStringBuilder(hmyNote,input.key,input.nt);
+        
+        result = new JNote(jNoteString);
+
         return result;
     }
 

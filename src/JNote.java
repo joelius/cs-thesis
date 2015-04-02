@@ -79,5 +79,39 @@ public class JNote {
     public int noteAsIntegerInCScale(){
         return this.asInt() % 12;
     }
+
+    public static String jNoteStringBuilder (int hmyNoteInCScale, String inputKey, JNote inputNote){
+        String result ="";
+        String testKey = inputKey.substring(0,2);
+        int keyNoteInCScale = -1;
+        int isInNextOctave = 0;
+
+        for (int i=0;i<notes.length;i++){
+            if (testKey.equalsIgnoreCase(notes[i])){
+                keyNoteInCScale = i;
+            }
+
+        }
+        if (keyNoteInCScale==-1){ //i.e. hasn't been found yet
+            for (int i=0;i<notes.length;i++){
+                if (testKey.substring(0,1).equalsIgnoreCase(notes[i])){
+                    keyNoteInCScale = i;
+                }
+            }
+        }
+
+        hmyNoteInCScale = (hmyNoteInCScale+keyNoteInCScale)%12;
+
+        result += notes[hmyNoteInCScale];
+
+        if (hmyNoteInCScale < inputNote.note){
+            isInNextOctave = 1;
+        }
+        result += (inputNote.octave+isInNextOctave);
+        result += inputNote.getDurationAsChar();
+
+        return result;
+
+    }
 }
 
