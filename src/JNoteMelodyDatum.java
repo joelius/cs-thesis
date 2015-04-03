@@ -4,13 +4,11 @@
 public class JNoteMelodyDatum extends JNoteInfoTrio {
 
     public int modeOfPrecedingIntervals;
-    public int currentInterval;
     public String key;
 
     public JNoteMelodyDatum(JNote nt, JNote rt, int[] intervalTrend, String keyIn){
         super (nt,rt,null);
         modeOfPrecedingIntervals = processIntervalTrend(intervalTrend);
-        currentInterval = hmy.asInt() - nt.asInt();
         key = keyIn;
     }
 
@@ -43,6 +41,12 @@ public class JNoteMelodyDatum extends JNoteInfoTrio {
             }
         }
         return mode;
+    }
+
+    public boolean isMajor(){
+
+        return key.contains(("M"));
+
     }
 
 }

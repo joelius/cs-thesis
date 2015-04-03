@@ -9,6 +9,10 @@ public class JNote {
     public int octave;
     private char duration;
     private String stringRepresentation;
+    public static final int MINOR_THIRD = 3;
+    public static final int MAJOR_THIRD = 4;
+    public static final int FIFTH = 7;
+    public static final int OCTAVE = 12;
 
     public static String[] notes = {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B"};
 
@@ -18,7 +22,7 @@ public class JNote {
 
         note = stringIn.charAt(0);
 
-        if (stringIn.length() > 3) {
+        if (stringIn.contains("#")) {
             isSharp = true;
             indexOffset = 1;
         }
@@ -26,6 +30,19 @@ public class JNote {
         octave = Character.getNumericValue(stringIn.charAt(1+indexOffset));
         duration = stringIn.charAt(2+indexOffset);
         stringRepresentation = stringIn;
+    }
+
+    public JNote (int intIn88, char durationIn){
+        duration = durationIn;
+        octave = (intIn88/12) + 1;
+        String tempNote = notes[(intIn88%12)];
+        isSharp = tempNote.contains("#");
+        note = tempNote.charAt(0);
+        stringRepresentation = (isSharp) ? (note + "#" + octave + duration) : (note + "" + octave + duration);
+    }
+
+    public JNote (JNote orig, int intervalToAdd){
+        this((orig.asInt() + intervalToAdd), orig.duration);
     }
 
     public JNote (){
@@ -113,5 +130,15 @@ public class JNote {
         return result;
 
     }
+
+    public boolean isSameNoteInScale(JNote noteIn){
+        return (this.note == noteIn.note) && (this.isSharp == noteIn.isSharp);
+    }
+
+    public boolean isIntervalXAboveNoteY(int x, JNote noteIn){
+        JNote temp = new JNote(noteIn.asInt() + x, noteIn.getDurationAsChar());
+        return (this.note == temp.note) && (this.isSharp == temp.isSharp);
+    }
+
 }
 

@@ -26,7 +26,7 @@ public class JNoteHarmonyDataLoaderTest {
         for (JNoteHarmonyDatum datum : jhdl.data){
             System.out.println(datum.toString());
         }
-        
+
     }
 
     @Test

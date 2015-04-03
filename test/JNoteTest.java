@@ -44,4 +44,27 @@ public class JNoteTest {
         assertEquals(7,test3.noteAsIntegerInCScale());
 
     }
+    @Test
+    public void testAugmentThird() throws Exception {
+        JNote test1 = new JNote("C#5q");
+        JNote test2 = new JNote("F5q");
+        assertEquals(true,test2.isIntervalXAboveNoteY(JNote.MAJOR_THIRD, test1));
+    }
+
+    @Test
+    public void testIntToStringAndBack() throws Exception {
+        JNote test1 = new JNote("A5q");
+
+        assertEquals(57,test1.asInt());
+
+        JNote test2 = new JNote(57,'q');
+
+        assertEquals("A5q",test2.toString());
+
+        JNote test3 = new JNote(test1.asInt(), test1.getDurationAsChar());
+
+
+        assertEquals(test1.toString(), test3.toString());
+        assertEquals(test1.asInt(), test3.asInt());
+    }
 }
