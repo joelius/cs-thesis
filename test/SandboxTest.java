@@ -11,4 +11,10 @@ public class SandboxTest {
         String test = "123456";
         assertEquals("12",test.substring(0,2));
     }
+
+    @Test
+    public void testNegativeIntegers(){
+        int things = 3412;
+        assertEquals(-3412, things*-1);
+    }
 }

@@ -37,7 +37,7 @@ public class DecisionTreeEngineTest {
 
         String filename = "DecisionTreeTest4Maritime";
         JFugueInputLoader jil = new JFugueInputLoader();
-        jil.populateWithJNoteTrioArray(machine.getOutput(),jnInputr.key,jnInputr.timeSig);
+        jil.populateWithJNoteTrioArray(machine.getOutput(), jnInputr.key, jnInputr.timeSig);
         JFugueBuilder test = new JFugueBuilder("what");
 
         try {
@@ -48,5 +48,13 @@ public class DecisionTreeEngineTest {
         }
 //        assertEquals(true, new File(inputPath).exists());
 
+    }
+
+    @Test
+    public void testPrepareEngine() throws Exception {
+        DecisionTreeEngine dte = new DecisionTreeEngine();
+        dte.prepareEngine();
+        System.out.println(dte.acceptableChordSetToString(dte.getMajorChords()));
+        System.out.println(dte.acceptableChordSetToString(dte.getMinorChords()));
     }
 }

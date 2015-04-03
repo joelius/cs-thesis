@@ -43,10 +43,29 @@ public class JNoteMelodyDatum extends JNoteInfoTrio {
         return mode;
     }
 
-    public boolean isMajor(){
-
+    public boolean isInMajorKey(){
         return key.contains(("M"));
 
     }
 
+
+    public JNoteMelodyDatum normalizedToCScale(){
+        JNoteMelodyDatum result;
+        JNote ntTemp, rtTemp;
+        int keyInt = JNote.getIntegerValueOfKeyInCScale(this.key);
+        System.out.println("keyInt: " + keyInt);
+        ntTemp = new JNote(this.nt, -keyInt);
+        rtTemp = new JNote(this.rt, -keyInt);
+
+        String newKey = (this.isInMajorKey()) ? "C-M" : "C-m";
+
+        result = new JNoteMelodyDatum(ntTemp,rtTemp,new int[]{0,0,0},newKey);
+
+        return result;
+    }
+
+    public String toString(){
+        String result="";
+        return "|JNoteMelodyDatum| Nt: " + this.nt.toString() + " | Rt: " + this.rt.toString() + " | Key: " + this.key;
+    }
 }
