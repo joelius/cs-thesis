@@ -20,7 +20,7 @@ public class JNoteHarmonyDataLoaderTest {
 //        System.out.println(jnir.lst.toString());
 
         JNoteHarmonyDataLoader jhdl = new JNoteHarmonyDataLoader();
-        jhdl.processJNoteInfoTrioArray(jnir.lst);
+        jhdl.processJNoteInfoTrioArray(jnir.lst, jnir.key);
         assertNotEquals(null, jhdl.data.toString());
 
         for (JNoteHarmonyDatum datum : jhdl.data){

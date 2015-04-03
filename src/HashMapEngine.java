@@ -33,29 +33,41 @@ public class HashMapEngine extends HarmonyGenerationEngine {
 
     public HashMapEngine (ArrayList<JNoteHarmonyDatum> dataIn){
         harmonyDataSet = dataIn;
+        brain = new HashMap<JNoteHashKey, Integer>();
 
     }
 
-    private void prepareEngine(){
+    public void prepareEngine(){
         JNoteHashKey hKey;
         for (JNoteHarmonyDatum datum : harmonyDataSet){
-            hKey = new JNoteHashKey(datum);
-            brain.put(hKey,datum.hmy.noteAsIntegerInCScale());
+            System.out.println(datum.toString());
+            if (datum.hmy!=null) {
+                hKey = new JNoteHashKey(datum);
+                brain.put(hKey, datum.hmy.noteAsIntegerInCScale());
+            }
         }
     }
 
-    public JNote generateHarmony(JNoteMelodyDatum input){
+    public JNote generateHarmony(JNoteMelodyDatum jmd){
+        System.out.println("generateHarmony. jmd.key = " + jmd.key + ".");
         JNote result;
         String jNoteString;
         int hmyNote;
         int isInNextOctave = 0; //set to one if octave offset is necessary
 
-        int melodyNote = input.nt.noteAsIntegerInCScale();
-        JNoteHashKey hKey = new JNoteHashKey(input);
+        int melodyNote = jmd.nt.noteAsIntegerInCScale();
+        JNoteHashKey hKey = new JNoteHashKey(jmd);
 
-        hmyNote = brain.get(hKey);
+        System.out.println(jmd.toString());
 
-        jNoteString = JNote.jNoteStringBuilder(hmyNote,input.key,input.nt);
+        if (!brain.containsKey(hKey)){
+            hmyNote = 0;
+        }
+        else {
+            hmyNote = brain.get(hKey);
+        }
+        System.out.println("input.key: " + jmd.key);
+        jNoteString = JNote.jNoteStringBuilder(hmyNote,jmd.key,jmd.nt);
 
         result = new JNote(jNoteString);
 

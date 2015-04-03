@@ -1,0 +1,17 @@
+#melodyinput2
+Key and timesig: A-m: 4-4
+C5q A4q
+D5q G4q
+E5q A4q
+D5q G4q
+C5q A4q
+E5q A4q
+G5q C4q
+A5q C4q
+F5q C4q
+E5q C4q
+D5q G4q
+D5q G4q
+B4q G4q
+A4q F4q
+G5q E4q

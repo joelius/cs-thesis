@@ -5,4 +5,5 @@
 public abstract class HarmonyGenerationEngine {
 
     public abstract JNote generateHarmony(JNoteMelodyDatum input);
+    public abstract void prepareEngine();
 }

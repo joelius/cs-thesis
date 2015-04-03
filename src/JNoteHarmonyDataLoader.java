@@ -10,14 +10,15 @@ public class JNoteHarmonyDataLoader {
 
     final boolean DEBUG = true;
     ArrayList<JNoteHarmonyDatum> data;
+    String key;
 
     public JNoteHarmonyDataLoader(){
         data = new ArrayList<JNoteHarmonyDatum>();
     }
 
-    public void processJNoteInfoTrioArray(ArrayList<JNoteInfoTrio> lst){
-        int previousSize = data.size();
-        int newSize;
+    public void processJNoteInfoTrioArray(ArrayList<JNoteInfoTrio> lst, String keyIn){
+
+        key = keyIn;
 
         ArrayList<Integer> trend;
 
@@ -27,7 +28,7 @@ public class JNoteHarmonyDataLoader {
 
             trend = new ArrayList<Integer>();
 
-            if (DEBUG){System.out.println(trio.toString());}
+            if (DEBUG){System.out.println("JNoteHarmonyDataLoader: " + trio.toString());}
 
             int numberOfPreviousNotes = data.size();
             if (numberOfPreviousNotes < 1){ // if statements to set trend of previous harmonies
@@ -42,25 +43,9 @@ public class JNoteHarmonyDataLoader {
                 trend.addAll(temp.intervalTrend);
                 trend.add(temp.currentInterval);
             }
-            data.add(new JNoteHarmonyDatum(trio.nt, trio.rt, trio.hmy, trend, NoteInfoReader.key));
+            data.add(new JNoteHarmonyDatum(trio.nt, trio.rt, trio.hmy, trend, key));
             if (DEBUG) {System.out.println("Size of data: " + data.size());}
         }
-        if (DEBUG){System.out.println("Size of lst: " + NoteInfoReader.lst.size());}
-
-        newSize = data.size();
-
-        if ((newSize-previousSize)==NoteInfoReader.lst.size())
-        {
-            if (DEBUG){System.out.println("Totals match. Clearing lst");}
-            //clear NoteInfoReader list.
-            NoteInfoReader.lst.clear();
-        }
-        else{
-            System.out.println("Totals do not match. Discrepancy between lst and data.");
-
-        }
-
-        if (DEBUG){System.out.println("Size of lst: " + NoteInfoReader.lst.size());}
 
     }
 

@@ -12,6 +12,10 @@ public class DecisionTreeEngine extends HarmonyGenerationEngine{
     boolean isMajorKey = true;
     JNote harmony;
 
+    public void prepareEngine(){
+        System.out.println("Decision Tree ready to go.");
+    }
+
     public JNote generateHarmony(JNoteMelodyDatum input){
 
         isMajorKey = input.isMajor();
@@ -44,7 +48,7 @@ public class DecisionTreeEngine extends HarmonyGenerationEngine{
                 harmony = new JNote(input.nt, JNote.FIFTH);
             }
         }
-        
+
         return harmony;
     }
 
