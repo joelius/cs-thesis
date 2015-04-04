@@ -12,7 +12,7 @@ public class HashMapEngineTest {
     @Test
     public void testGenerateHarmony() throws Exception {
 
-        String pathToFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/hornpipe.txt";
+        String pathToFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/hashmapfillup.txt";
         JNoteHarmonyInfoReader jnhir = new JNoteHarmonyInfoReader();
 
         try { jnhir.readInDataFile(pathToFile);
@@ -32,7 +32,7 @@ public class HashMapEngineTest {
 
         System.out.println("after hashMapEngine. Key: " + jhdl.data.get(0).key);
 
-        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/melodyinput1.txt";
+        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/maritime.txt";
         JNoteInputReader jnInputr = new JNoteInputReader();
 
         try { jnInputr.readInDataFile(pathToInputFile);
@@ -48,7 +48,35 @@ public class HashMapEngineTest {
 
         machine.run();
 
-        System.out.println(machine.outputToString());
+        //System.out.println(machine.outputToString());
+
+
+        JFugueInputLoader jil = new JFugueInputLoader();
+
+
+        boolean generateHarmonies = true;
+
+        if (generateHarmonies){
+            jil.populateWithJNoteTrioArray(machine.getOutput(), jnInputr.key, jnInputr.timeSig);
+        }
+        else{
+            jil.populateWithJNoteTrioArray(jnInputr.lst, jnInputr.key,jnInputr.timeSig);
+        }
+
+        JFugueBuilder test = new JFugueBuilder("");
+        String filename = "HMETest1Maritime";
+
+        System.out.println(machine.engine.toString());
+
+        try {
+            test.writeFile(jil.patternStringArray, filename);
+            // test.writeFile(jil.patternStringArray, filename);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
 
     }
+
 }

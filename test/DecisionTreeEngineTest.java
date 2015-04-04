@@ -51,7 +51,7 @@ public class DecisionTreeEngineTest {
 
         try {
             test.writeFile(jil.patternStringArray, filename);
-            test.writeFile(jil.patternStringArray, filename);
+           // test.writeFile(jil.patternStringArray, filename);
         }
         catch (Exception e){
             System.out.println(e.getMessage());

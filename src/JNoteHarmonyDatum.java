@@ -57,6 +57,27 @@ public class JNoteHarmonyDatum extends JNoteInfoTrio {
         return mode;
     }
 
+    public boolean isInMajorKey(){
+        return key.contains(("M"));
+
+    }
+
+    public JNoteHarmonyDatum normalizedToCScale(){
+        JNoteHarmonyDatum result;
+        JNote ntTemp, rtTemp, hmyTemp;
+        int keyInt = JNote.getIntegerValueOfKeyInCScale(this.key);
+        System.out.println("keyInt: " + keyInt);
+        ntTemp = new JNote(this.nt, -keyInt);
+        rtTemp = new JNote(this.rt, -keyInt);
+        hmyTemp = new JNote(this.hmy, -keyInt);
+
+        String newKey = (this.isInMajorKey()) ? "C-M" : "C-m";
+
+        result = new JNoteHarmonyDatum(ntTemp,rtTemp,hmyTemp,this.intervalTrend,newKey);
+
+        return result;
+    }
+
     public String toString(){
         String note, root, harmony;
 

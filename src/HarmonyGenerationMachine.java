@@ -7,7 +7,7 @@ public class HarmonyGenerationMachine {
 
     private ArrayList<JNoteMelodyDatum> input;
     private ArrayList<JNoteInfoTrio> output;
-    private HarmonyGenerationEngine engine;
+    public HarmonyGenerationEngine engine;
 
     public HarmonyGenerationMachine (ArrayList<JNoteMelodyDatum> iIn, HarmonyGenerationEngine eIn ){
         input = iIn;
@@ -43,4 +43,5 @@ public class HarmonyGenerationMachine {
     public ArrayList<JNoteInfoTrio> getOutput() {
         return output;
     }
+
 }

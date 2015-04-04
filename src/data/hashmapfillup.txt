@@ -1,0 +1,16 @@
+#hashmapfillup
+Key and timesig: C-M: 4-4
+E5q C4q G5q
+F5q D4q A5q
+G5q E4q B5q
+A5q F4q C5q
+B5q G4q D5q
+C5q A4q E5q
+D5q B4q G5q
+C5q C4q E5q
+D5q D4q F5q
+E5q E4q G5q
+F5q F4q A5q
+G5q G4q B5q
+A5q A4q C5q
+B5q B4q D5q
