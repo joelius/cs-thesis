@@ -9,13 +9,13 @@ public class JNoteMelodyDatumTest {
 
     @Test
     public void testIsMajor() throws Exception {
-        JNoteMelodyDatum test = new JNoteMelodyDatum(new JNote("C5q"), new JNote("C7q"),new int[]{0,1,2},"D-M");
+        JNoteMelodyDatum test = new JNoteMelodyDatum(new JNote("C5q"), new JNote("C7q"),"D-M");
         assertEquals(true, test.isInMajorKey());
     }
 
     @Test
     public void testNormalizeToCScale() throws Exception {
-        JNoteMelodyDatum test = new JNoteMelodyDatum(new JNote("A5q"), new JNote("F4q"), new int[]{0,1,2},"F-M");
+        JNoteMelodyDatum test = new JNoteMelodyDatum(new JNote("A5q"), new JNote("F4q"),"F-M");
 
         System.out.println(test.toString());
 
@@ -25,7 +25,7 @@ public class JNoteMelodyDatumTest {
 
     @Test
     public void testKeyToInt() throws Exception {
-        JNoteMelodyDatum test = new JNoteMelodyDatum(new JNote("A5q"), new JNote("F4q"), new int[]{0,1,2},"F#-M");
+        JNoteMelodyDatum test = new JNoteMelodyDatum(new JNote("A5q"), new JNote("F4q"),"F#-M");
 
         System.out.println(test.toString());
 

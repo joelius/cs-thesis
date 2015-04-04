@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
  * Created by jolpatrik on 2015-04-03.
  */
 public class DecisionTreeEngineTest {
-
+    boolean generateHarmonies;
     @Test
     public void testGenerateHarmony() throws Exception {
 
@@ -35,12 +35,22 @@ public class DecisionTreeEngineTest {
 
         machine.getOutput();
 
-        String filename = "DecisionTreeTest4Maritime";
+        String filename = "DecisionTreeTest8MaritimeHarmonies";
         JFugueInputLoader jil = new JFugueInputLoader();
-        jil.populateWithJNoteTrioArray(machine.getOutput(), jnInputr.key, jnInputr.timeSig);
+
+        generateHarmonies = true;
+
+        if (generateHarmonies){
+            jil.populateWithJNoteTrioArray(machine.getOutput(), jnInputr.key, jnInputr.timeSig);
+        }
+        else{
+            jil.populateWithJNoteTrioArray(jnInputr.lst, jnInputr.key,jnInputr.timeSig);
+        }
+
         JFugueBuilder test = new JFugueBuilder("what");
 
         try {
+            test.writeFile(jil.patternStringArray, filename);
             test.writeFile(jil.patternStringArray, filename);
         }
         catch (Exception e){

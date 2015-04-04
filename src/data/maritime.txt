@@ -18,7 +18,7 @@ C6q C5q
 B5q G4q
 B5q G4q
 B5q G4q
-B5q A5q
-A5q A5q
-A5q A5q
-A5q A5q
+B5q A4q
+A5q A4q
+A5q A4q
+A5q A4q

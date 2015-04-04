@@ -20,7 +20,6 @@ public class DecisionTreeEngine extends HarmonyGenerationEngine{
         for (int i=0;i<minorScale.length;i++){
             acceptableChordsinMinor.put (minorScale[i], new Chord(minorScale[i],minorScale[(i+2)%minorScale.length],minorScale[(i+4)%minorScale.length]) );
         }
-
         System.out.println("Decision Tree ready to go.");
     }
 
@@ -46,43 +45,46 @@ public class DecisionTreeEngine extends HarmonyGenerationEngine{
 
             //whichever one "Note is" in chord, harmony is the other one.
 
-            chord = acceptableChordsinMajor.get(temp.rt.noteAsIntegerInCScale());
+            chord = acceptableChordsinMajor.get(rootInt);
             System.out.println("chord " + chord );
 
-            if(input.nt.isSameNoteInScale(input.rt)){
-                harmony = new JNote(input.nt, JNote.MAJOR_THIRD);
+            if(noteInt==chord.root){
+                harmony = new JNote(input.nt, chord.third-chord.root);
             }
-            else if (input.nt.isIntervalXAboveNoteY(JNote.MAJOR_THIRD, input.rt)){
-                harmony = new JNote(input.nt, JNote.FIFTH-JNote.MAJOR_THIRD);
+            else if (noteInt==chord.third){
+                harmony = new JNote(input.nt, chord.fifth-chord.third);
             }
-            else if (input.nt.isIntervalXAboveNoteY(JNote.FIFTH, input.rt)){
-                harmony = new JNote(input.nt, JNote.OCTAVE-JNote.FIFTH);
+            else if (noteInt==chord.fifth){
+                harmony = new JNote(input.nt, (chord.root)-chord.fifth);
+            }
+            else if (noteInt==chord.third-2) {
+                harmony = new JNote(input.nt, chord.fifth - (chord.third-2));
             }
             else {
-                harmony = new JNote(input.rt, JNote.FIFTH+JNote.OCTAVE);
+                harmony = new JNote(input.rt, -1/**JNote.OCTAVE*/);
             }
         }
         else {
             System.out.print(acceptableChordsinMinor.values());
-            chord = acceptableChordsinMinor.get(temp.rt.noteAsIntegerInCScale());
+            chord = acceptableChordsinMinor.get(rootInt);
             System.out.println("chord " + chord );
 
-
-
-            if(input.nt.isSameNoteInScale(input.rt)){
-                harmony = new JNote(input.nt, JNote.MINOR_THIRD);
+            if(noteInt==chord.root){
+                harmony = new JNote(input.nt, chord.third-chord.root);
             }
-            else if (input.nt.isIntervalXAboveNoteY(JNote.MINOR_THIRD, input.rt)){
-                harmony = new JNote(input.nt, JNote.FIFTH-JNote.MINOR_THIRD);
+            else if (noteInt==chord.third){
+                harmony = new JNote(input.nt, chord.fifth-chord.third);
             }
-            else if (input.nt.isIntervalXAboveNoteY(JNote.FIFTH, input.rt)){
-                harmony = new JNote(input.nt, JNote.OCTAVE-JNote.FIFTH);
+            else if (noteInt==chord.fifth){
+                harmony = new JNote(input.nt, (chord.root)-chord.fifth);
+            }
+            else if (noteInt==chord.third-1) {
+                harmony = new JNote(input.nt, chord.fifth - (chord.third-1));
             }
             else {
-                harmony = new JNote(input.nt, JNote.FIFTH+JNote.OCTAVE);
+                harmony = new JNote(input.rt, -1 /**JNote.OCTAVE*/);
             }
         }
-
         return harmony;
     }
 
