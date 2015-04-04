@@ -15,7 +15,7 @@ public class DecisionTreeEngineTest {
 
         HarmonyGenerationEngine decisionTreeEngine = new DecisionTreeEngine();
 
-        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/maritime.txt";
+        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/barrett.txt";
         JNoteInputReader jnInputr = new JNoteInputReader();
 
         try { jnInputr.readInDataFile(pathToInputFile);
@@ -35,7 +35,7 @@ public class DecisionTreeEngineTest {
 
         machine.getOutput();
 
-        String filename = "DecisionTreeTest8MaritimeHarmonies";
+        String filename = "DecisionTreeTest10BarrettHmy";
         JFugueInputLoader jil = new JFugueInputLoader();
 
         generateHarmonies = true;

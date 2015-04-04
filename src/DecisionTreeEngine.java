@@ -55,7 +55,7 @@ public class DecisionTreeEngine extends HarmonyGenerationEngine{
                 harmony = new JNote(input.nt, chord.fifth-chord.third);
             }
             else if (noteInt==chord.fifth){
-                harmony = new JNote(input.nt, (chord.root)-chord.fifth);
+                harmony = new JNote(input.nt, (chord.root+JNote.OCTAVE)-chord.fifth);
             }
             else if (noteInt==chord.third-2) {
                 harmony = new JNote(input.nt, chord.fifth - (chord.third-2));
@@ -76,7 +76,7 @@ public class DecisionTreeEngine extends HarmonyGenerationEngine{
                 harmony = new JNote(input.nt, chord.fifth-chord.third);
             }
             else if (noteInt==chord.fifth){
-                harmony = new JNote(input.nt, (chord.root)-chord.fifth);
+                harmony = new JNote(input.nt, (chord.root+ JNote.OCTAVE)-chord.fifth);
             }
             else if (noteInt==chord.third-1) {
                 harmony = new JNote(input.nt, chord.fifth - (chord.third-1));

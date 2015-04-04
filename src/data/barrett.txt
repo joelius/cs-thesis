@@ -1,0 +1,22 @@
+#barretts
+Key and timesig: C-M: 4-4
+C4i C3i
+E4i C3i
+G4q C3q
+G4q C3q
+F4i F3i
+F4i F3i
+E4q F3q
+D4i G3i
+D4i G3i
+D4q G3q
+C4q C3q
+C4i C3i
+E4i C3i
+G4q C3q
+G4q C3q
+A4q F3q
+A4q F3q
+G4q C3q
+G4q C3q
+D4w G3w
