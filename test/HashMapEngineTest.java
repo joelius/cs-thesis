@@ -32,7 +32,7 @@ public class HashMapEngineTest {
 
         System.out.println("after hashMapEngine. Key: " + jhdl.data.get(0).key);
 
-        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/maritime.txt";
+        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/barrett.txt";
         JNoteInputReader jnInputr = new JNoteInputReader();
 
         try { jnInputr.readInDataFile(pathToInputFile);
@@ -64,7 +64,7 @@ public class HashMapEngineTest {
         }
 
         JFugueBuilder test = new JFugueBuilder("");
-        String filename = "HMETest1Maritime";
+        String filename = "HMETest2Barretts";
 
         System.out.println(machine.engine.toString());
 

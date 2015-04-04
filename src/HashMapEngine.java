@@ -8,79 +8,18 @@ import java.util.Map;
  */
 public class HashMapEngine extends HarmonyGenerationEngine {
 
-    private final int ALL_DATA = 0;
-    private final int NO_DURATION = 1;
-    private final int NO_INTERVAL_DATA = 2;
-    private final int ONLY_ROOT_AND_NOTE = 3;
-
-    public class JNoteHashKey {
-        public int noteInScale;
-        public char duration;
-        public int rootNoteOfCurrentChord;
-        public int sizeOfInterval;
-
-        private JNoteHashKey (JNoteHarmonyDatum input, int type){
-
-            JNoteHarmonyDatum temp = input.normalizedToCScale();
-
-            noteInScale = temp.nt.noteAsIntegerInCScale();
-            rootNoteOfCurrentChord = temp.rt.noteAsIntegerInCScale();
-            duration = (type==ALL_DATA || type==NO_INTERVAL_DATA) ? temp.nt.getDurationAsChar() : 'N';
-            sizeOfInterval = (type==ALL_DATA || type==NO_DURATION) ? temp.modeOfPrecedingIntervals : 24;
-        }
-
-        private JNoteHashKey (JNoteMelodyDatum input, int type){
-
-            JNoteMelodyDatum temp = input.normalizedToCScale();
-            noteInScale = temp.nt.noteAsIntegerInCScale();
-            rootNoteOfCurrentChord = temp.rt.noteAsIntegerInCScale();
-            duration = (type==ALL_DATA || type==NO_INTERVAL_DATA) ? temp.nt.getDurationAsChar() : 'N';
-            sizeOfInterval = (type==ALL_DATA || type==NO_DURATION) ? temp.modeOfPrecedingIntervals : 24;
-
-            //    sizeOfInterval = input.modeOfPrecedingIntervals;
-            //    duration = input.nt.getDurationAsChar();
-
-        }
-
-        public boolean equals(Object obj){
-            if (this == obj) {return true;}
-            if (obj == null) {return false;}
-            if (getClass() != obj.getClass()){return false;}
-
-            JNoteHashKey other = (JNoteHashKey) obj;
-
-            if (this.noteInScale!=other.noteInScale){
-                return false;
-            }
-            if (this.rootNoteOfCurrentChord!=other.rootNoteOfCurrentChord){
-                return false;
-            }
-            if (this.duration!=other.duration){
-                return false;
-            }
-            if (this.sizeOfInterval!=other.sizeOfInterval){
-                return false;
-            }
-            return true;
-        }
-
-        public String toString(){
-            return "(" + noteInScale + ":" + rootNoteOfCurrentChord + ":" + duration + ":" + sizeOfInterval + ")";
-        }
-    }
-
     private ArrayList<JNoteHarmonyDatum> harmonyDataSet;
-    private HashMap<JNoteHashKey,Integer> brainAllData;
-    private HashMap<JNoteHashKey,Integer> brainNoDurationData;
-    private HashMap<JNoteHashKey,Integer> brainNoIntervalData;
-    private HashMap<JNoteHashKey,Integer> brainOnlyRootAndNoteData;
+    private HashMap<String,Integer> brainAllData;
+    private HashMap<String,Integer> brainNoDurationData;
+    private HashMap<String,Integer> brainNoIntervalData;
+    private HashMap<String,Integer> brainOnlyRootAndNoteData;
 
     public HashMapEngine (ArrayList<JNoteHarmonyDatum> dataIn){
         harmonyDataSet = dataIn;
-        brainAllData = new HashMap<JNoteHashKey, Integer>();
-        brainNoDurationData = new HashMap<JNoteHashKey, Integer>();
-        brainNoIntervalData = new HashMap<JNoteHashKey, Integer>();
-        brainOnlyRootAndNoteData = new HashMap<JNoteHashKey, Integer>();
+        brainAllData = new HashMap<String, Integer>();
+        brainNoDurationData = new HashMap<String, Integer>();
+        brainNoIntervalData = new HashMap<String, Integer>();
+        brainOnlyRootAndNoteData = new HashMap<String, Integer>();
     }
 
     public void prepareEngine(){
@@ -88,15 +27,15 @@ public class HashMapEngine extends HarmonyGenerationEngine {
         for (JNoteHarmonyDatum datum : harmonyDataSet){
             System.out.println(datum.toString());
             if (datum.hmy!=null) {
-                hKeyAllData = new JNoteHashKey(datum,ALL_DATA);
-                hKeyNoDuration = new JNoteHashKey(datum,NO_DURATION);
-                hkeyNoInterval = new JNoteHashKey(datum,NO_INTERVAL_DATA);
-                hKeyOnlyRtAndNtData = new JNoteHashKey(datum,ONLY_ROOT_AND_NOTE);
+                hKeyAllData = new JNoteHashKey(datum,JNoteHashKey.ALL_DATA);
+                hKeyNoDuration = new JNoteHashKey(datum,JNoteHashKey.NO_DURATION);
+                hkeyNoInterval = new JNoteHashKey(datum,JNoteHashKey.NO_INTERVAL_DATA);
+                hKeyOnlyRtAndNtData = new JNoteHashKey(datum,JNoteHashKey.ONLY_ROOT_AND_NOTE);
 
-                brainAllData.put(hKeyAllData, datum.hmy.noteAsIntegerInCScale());
-                brainNoDurationData.put(hKeyNoDuration, datum.hmy.noteAsIntegerInCScale());
-                brainNoIntervalData.put(hkeyNoInterval, datum.hmy.noteAsIntegerInCScale());
-                brainOnlyRootAndNoteData.put(hKeyOnlyRtAndNtData, datum.hmy.noteAsIntegerInCScale());
+                brainAllData.put(hKeyAllData.toString(), datum.hmy.noteAsIntegerInCScale());
+                brainNoDurationData.put(hKeyNoDuration.toString(), datum.hmy.noteAsIntegerInCScale());
+                brainNoIntervalData.put(hkeyNoInterval.toString(), datum.hmy.noteAsIntegerInCScale());
+                brainOnlyRootAndNoteData.put(hKeyOnlyRtAndNtData.toString(), datum.hmy.noteAsIntegerInCScale());
             }
         }
     }
@@ -108,10 +47,10 @@ public class HashMapEngine extends HarmonyGenerationEngine {
         int hmyNote;
 
         int melodyNote = jmd.nt.noteAsIntegerInCScale();
-        JNoteHashKey hKeyAllData = new JNoteHashKey(jmd,ALL_DATA);
-        JNoteHashKey hKeyNoDurationData = new JNoteHashKey(jmd,NO_DURATION);
-        JNoteHashKey hKeyNoIntervalData = new JNoteHashKey(jmd,NO_INTERVAL_DATA);
-        JNoteHashKey hKeyOnlyRootAndNoteData = new JNoteHashKey(jmd,ONLY_ROOT_AND_NOTE);
+        JNoteHashKey hKeyAllData = new JNoteHashKey(jmd,JNoteHashKey.ALL_DATA);
+        JNoteHashKey hKeyNoDurationData = new JNoteHashKey(jmd,JNoteHashKey.NO_DURATION);
+        JNoteHashKey hKeyNoIntervalData = new JNoteHashKey(jmd,JNoteHashKey.NO_INTERVAL_DATA);
+        JNoteHashKey hKeyOnlyRootAndNoteData = new JNoteHashKey(jmd,JNoteHashKey.ONLY_ROOT_AND_NOTE);
 
         //System.out.println(jmd.toString());
 
@@ -136,21 +75,24 @@ public class HashMapEngine extends HarmonyGenerationEngine {
 //        }
 
         System.out.println("|Harmony generation| " + jmd.toString() + "||hashKey:|" + hKeyAllData.toString());
+        System.out.println(brainAllData.keySet());
+        System.out.println("|Harmony generation ROOT AND NOTE| " + jmd.toString() + "||hashKey:|" + hKeyOnlyRootAndNoteData.toString());
+        System.out.println(brainOnlyRootAndNoteData.keySet());
 
-        if (brainAllData.containsKey(hKeyAllData)) {
-            hmyNote = brainAllData.get(hKeyAllData);
+        if (brainAllData.containsKey(hKeyAllData.toString())) {
+            hmyNote = brainAllData.get(hKeyAllData.toString());
             System.out.println("Generated from brainAllData!");
         } else {
-            if (brainNoDurationData.containsKey(hKeyNoDurationData)) {
-                hmyNote = brainNoDurationData.get(hKeyNoDurationData);
+            if (brainNoDurationData.containsKey(hKeyNoDurationData.toString())) {
+                hmyNote = brainNoDurationData.get(hKeyNoDurationData.toString());
                 System.out.println("Generated from brainNoDurationData!");
             } else {
-                if (brainNoIntervalData.containsKey(hKeyNoIntervalData)) {
-                    hmyNote = brainNoIntervalData.get(hKeyNoIntervalData);
+                if (brainNoIntervalData.containsKey(hKeyNoIntervalData.toString())) {
+                    hmyNote = brainNoIntervalData.get(hKeyNoIntervalData.toString());
                     System.out.println("Generated from brainNoIntervalData!");
                 } else {
-                    if (brainOnlyRootAndNoteData.containsKey(hKeyOnlyRootAndNoteData)) {
-                        hmyNote = brainOnlyRootAndNoteData.get(hKeyOnlyRootAndNoteData);
+                    if (brainOnlyRootAndNoteData.containsKey(hKeyOnlyRootAndNoteData.toString())) {
+                        hmyNote = brainOnlyRootAndNoteData.get(hKeyOnlyRootAndNoteData.toString());
                         System.out.println("Generated from brainOnlyRootAndNoteData!");
                     } else {
                         hmyNote = 0;
@@ -168,7 +110,7 @@ public class HashMapEngine extends HarmonyGenerationEngine {
         return result;
     }
 
-    public String brainToString(HashMap<JNoteHashKey,Integer> brain){
+    public String brainToString(HashMap<String,Integer> brain){
         String result = "";
             Iterator it = brain.entrySet().iterator();
             while (it.hasNext()) {
