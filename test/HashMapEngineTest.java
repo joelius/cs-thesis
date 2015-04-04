@@ -12,7 +12,7 @@ public class HashMapEngineTest {
     @Test
     public void testGenerateHarmony() throws Exception {
 
-        String pathToFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/hashmapfillup.txt";
+        String pathToFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/hashmapfillupAmin.txt";
         JNoteHarmonyInfoReader jnhir = new JNoteHarmonyInfoReader();
 
         try { jnhir.readInDataFile(pathToFile);
@@ -32,7 +32,7 @@ public class HashMapEngineTest {
 
         System.out.println("after hashMapEngine. Key: " + jhdl.data.get(0).key);
 
-        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/barrett.txt";
+        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/maritime.txt";
         JNoteInputReader jnInputr = new JNoteInputReader();
 
         try { jnInputr.readInDataFile(pathToInputFile);
@@ -64,7 +64,7 @@ public class HashMapEngineTest {
         }
 
         JFugueBuilder test = new JFugueBuilder("");
-        String filename = "HMETest2Barretts";
+        String filename = "HMETest3Maritime";
 
         System.out.println(machine.engine.toString());
 

@@ -24,18 +24,21 @@ public class HashMapEngine extends HarmonyGenerationEngine {
 
     public void prepareEngine(){
         JNoteHashKey hKeyAllData,hKeyNoDuration,hkeyNoInterval,hKeyOnlyRtAndNtData;
+        JNoteHarmonyDatum temp;
         for (JNoteHarmonyDatum datum : harmonyDataSet){
+            temp = datum.normalizedToCScale();
+
             System.out.println(datum.toString());
             if (datum.hmy!=null) {
-                hKeyAllData = new JNoteHashKey(datum,JNoteHashKey.ALL_DATA);
-                hKeyNoDuration = new JNoteHashKey(datum,JNoteHashKey.NO_DURATION);
-                hkeyNoInterval = new JNoteHashKey(datum,JNoteHashKey.NO_INTERVAL_DATA);
-                hKeyOnlyRtAndNtData = new JNoteHashKey(datum,JNoteHashKey.ONLY_ROOT_AND_NOTE);
+                hKeyAllData = new JNoteHashKey(temp,JNoteHashKey.ALL_DATA);
+                hKeyNoDuration = new JNoteHashKey(temp,JNoteHashKey.NO_DURATION);
+                hkeyNoInterval = new JNoteHashKey(temp,JNoteHashKey.NO_INTERVAL_DATA);
+                hKeyOnlyRtAndNtData = new JNoteHashKey(temp,JNoteHashKey.ONLY_ROOT_AND_NOTE);
 
-                brainAllData.put(hKeyAllData.toString(), datum.hmy.noteAsIntegerInCScale());
-                brainNoDurationData.put(hKeyNoDuration.toString(), datum.hmy.noteAsIntegerInCScale());
-                brainNoIntervalData.put(hkeyNoInterval.toString(), datum.hmy.noteAsIntegerInCScale());
-                brainOnlyRootAndNoteData.put(hKeyOnlyRtAndNtData.toString(), datum.hmy.noteAsIntegerInCScale());
+                brainAllData.put(hKeyAllData.toString(), temp.hmy.noteAsIntegerInCScale());
+                brainNoDurationData.put(hKeyNoDuration.toString(), temp.hmy.noteAsIntegerInCScale());
+                brainNoIntervalData.put(hkeyNoInterval.toString(), temp.hmy.noteAsIntegerInCScale());
+                brainOnlyRootAndNoteData.put(hKeyOnlyRtAndNtData.toString(), temp.hmy.noteAsIntegerInCScale());
             }
         }
     }
