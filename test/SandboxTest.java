@@ -17,4 +17,27 @@ public class SandboxTest {
         int things = 3412;
         assertEquals(-3412, things*-1);
     }
+
+    @Test
+    public void testArrayStringStuff(){
+        String key = "C";
+        String key2 = "C#";
+
+        for (int i = 0; i<JNote.notes.length;i++){
+            System.out.print(JNote.notes[i] + "|| " );
+            if (JNote.notes[i].equalsIgnoreCase(key)){
+                System.out.println(key + " is here at " + i);
+            }
+            else {
+                System.out.println(key + " is NOT at " + i);
+            }
+            if (JNote.notes[i].equalsIgnoreCase(key2)){
+                System.out.println(key2 + " is here at " + i);
+            }
+            else {
+                System.out.println(key2 + " is NOT at " + i);
+            }
+        }
+
+    }
 }

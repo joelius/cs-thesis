@@ -1,5 +1,5 @@
 #hashmapfillup
-Key and timesig: A-m: 4-4
+Key and timesig: C-M: 4-4
 E5q C4q G5q
 F5q D4q A5q
 G5q E4q B5q

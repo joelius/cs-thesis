@@ -99,21 +99,17 @@ public class JNote {
 
     public static String jNoteStringBuilder (int hmyNoteInCScale, String inputKey, JNote inputNote){
         String result ="";
-        String testKey = inputKey.substring(0,2);
-        int keyNoteInCScale = -1;
+
+        String testKey = inputKey.contains("#") ? inputKey.substring(0,2) : inputKey.substring(0,1);
+
+        //TODO: simplify this method.
+        int keyNoteInCScale = 0;
         int isInNextOctave = 0;
 
         for (int i=0;i<notes.length;i++){
-            if (testKey.equalsIgnoreCase(notes[i])){
+            if (notes[i].contains(testKey)){
                 keyNoteInCScale = i;
-            }
-
-        }
-        if (keyNoteInCScale==-1){ //i.e. hasn't been found yet
-            for (int i=0;i<notes.length;i++){
-                if (testKey.substring(0,1).equalsIgnoreCase(notes[i])){
-                    keyNoteInCScale = i;
-                }
+                break; //to avoid hitting C# if it's C, or F# if it's F
             }
         }
 
@@ -121,7 +117,7 @@ public class JNote {
 
         result += notes[hmyNoteInCScale];
 
-        if (hmyNoteInCScale < inputNote.note){
+        if (hmyNoteInCScale < inputNote.noteAsIntegerInCScale()){
             isInNextOctave = 1;
         }
         result += (inputNote.octave+isInNextOctave);

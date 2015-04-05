@@ -67,4 +67,14 @@ public class JNoteTest {
         assertEquals(test1.toString(), test3.toString());
         assertEquals(test1.asInt(), test3.asInt());
     }
+
+    @Test
+    public void testJNoteStringBuilder() throws Exception {
+        int hmyInCScale = 4;
+        String key = "C-M";
+        JNote jn = new JNote("C5q");
+
+        assertEquals("E5q", JNote.jNoteStringBuilder(hmyInCScale,key,jn));
+
+    }
 }

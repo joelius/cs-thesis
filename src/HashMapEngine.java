@@ -55,28 +55,6 @@ public class HashMapEngine extends HarmonyGenerationEngine {
         JNoteHashKey hKeyNoIntervalData = new JNoteHashKey(jmd,JNoteHashKey.NO_INTERVAL_DATA);
         JNoteHashKey hKeyOnlyRootAndNoteData = new JNoteHashKey(jmd,JNoteHashKey.ONLY_ROOT_AND_NOTE);
 
-        //System.out.println(jmd.toString());
-
-//        if (!brainAllData.containsKey(hKeyIn)) {
-//            if (!brainNoDurationData.containsKey(hKeyIn)) {
-//                if(!brainNoIntervalData.containsKey(hKeyIn)) {
-//                    if(!brainOnlyRootAndNoteData.containsKey(hKeyIn)) {
-//                        hmyNote = 0;
-//                    }
-//                    else {
-//                        hmyNote = brainOnlyRootAndNoteData.get(hKeyIn);
-//                    }
-//                }
-//                else {
-//                    hmyNote = brainNoIntervalData.get(hKeyIn);
-//                }
-//            } else {
-//                hmyNote = brainNoDurationData.get(hKeyIn);
-//            }
-//        } else {
-//            hmyNote = brainAllData.get(hKeyIn);
-//        }
-
         System.out.println("|Harmony generation| " + jmd.toString() + "||hashKey:|" + hKeyAllData.toString());
         System.out.println(brainAllData.keySet());
         System.out.println("|Harmony generation ROOT AND NOTE| " + jmd.toString() + "||hashKey:|" + hKeyOnlyRootAndNoteData.toString());
