@@ -29,4 +29,9 @@ public class JNoteInfoTrio
 
         return "JNoteInfoTrio: Note: " + note + " Root: " + root + " Harmony: " + harmony;
     }
+
+    public boolean isAFullTriad(){
+        return (nt!=null) && (rt!=null) && (hmy!=null);
+    }
+
 }
