@@ -15,7 +15,7 @@ public class StreamEngine extends HarmonyGenerationEngine{
     private boolean isInMajorKey;
     private String key;
     private int third;
-    private int MARGIN = 5;
+    private int MAX_MARGIN = 5;
 
     ArrayList<JNoteMelodyDatum> inputList;
     ArrayList<JNoteInfoTrio> outputList;
@@ -42,12 +42,12 @@ public class StreamEngine extends HarmonyGenerationEngine{
         JNoteInfoTrio temp;
         int interval;
         for (JNoteMelodyDatum jmd : inputList){
-            if (jmd.nt.isSameNoteInScale(jmd.rt)){
-                interval = (jmd.isInMajorKey()) ? JNote.MAJOR_THIRD : JNote.MINOR_THIRD;
-                temp = new JNoteInfoTrio(jmd.nt,jmd.rt,new JNote(jmd.nt,interval));
-            } else {
+//            if (jmd.nt.isSameNoteInScale(jmd.rt)){
+//                interval = (jmd.isInMajorKey()) ? JNote.MAJOR_THIRD : JNote.MINOR_THIRD;
+//                temp = new JNoteInfoTrio(jmd.nt,jmd.rt,new JNote(jmd.nt,interval));
+//            } else {
                 temp = new JNoteInfoTrio(jmd.nt,jmd.rt,null);
-            }
+//            }
             outputList.add(temp);
         }
 
@@ -60,148 +60,112 @@ public class StreamEngine extends HarmonyGenerationEngine{
         JNoteInfoTrio temp;
         JNote hmy;
         int length = outputList.size();
-        for (int i=0; i<length-1; i++){
-            prev = (i==0) ? outputList.get(i) : outputList.get(i-1);
-            temp = outputList.get(i);
 
-            hmy = generateHarmoniesRecursively(i, temp);
+        generateHarmoniesRecursively(0);
 
-            temp = new JNoteInfoTrio(jit.nt,jit.rt,generateHarmony(jit));
-            outputList.add(temp);
-        }
+        System.out.println(isSolved(outputList) ? "It's solved!!" : "It's not solved. :(");
 
         //if hmy is null, then look at previous one, then try to make it as close as possible to the next hmy.
     }
 
-    public boolean generateHarmonyRecursively(int index){
-        JNoteInfoTrio jitOrig = outputList.get(index);
-        JNoteInfoTrio jitPrev, jitNew;
+    public boolean generateHarmoniesRecursively(int index){
+
+        JNoteInfoTrio jitOrig, jitPrev, jitPrevPrev, jitNew;
         Chord chd;
         int hmyToStayCloseTo, hmyTry1, hmyTry2, hmyTry3;
-
+        if (index > 1){
+            jitPrev = outputList.get(index-1);
+            jitPrevPrev = outputList.get(index-2);
+            if (Math.abs(jitPrev.hmy.asInt()-jitPrevPrev.hmy.asInt()) > MAX_MARGIN){
+                return false;
+            }
+        }
 
         if (index == outputList.size()){
             return true;
         }
         else {
-            if (jitOrig.isAFullTriad()){
-                generateHarmonyRecursively(index+1);
-            }
-            else {
-                if (index==0){
-                    jitNew = new JNoteInfoTrio(jitOrig.nt,jitOrig.rt,new JNote(jitOrig.nt,third));
-                    outputList.add(index,jitNew);
-                    generateHarmonyRecursively(index + 1);
-                    jitNew = new JNoteInfoTrio(jitOrig.nt,jitOrig.rt,new JNote(jitOrig.nt,JNote.FIFTH));
-                    outputList.add(index, jitNew);
-                    generateHarmonyRecursively(index + 1);
-                    jitNew = new JNoteInfoTrio(jitOrig.nt,jitOrig.rt,new JNote(jitOrig.nt,JNote.OCTAVE));
-                    outputList.add(index, jitNew);
-                    generateHarmonyRecursively(index + 1);
+            jitOrig = outputList.get(index);
+            if (index==0){
+                jitNew = new JNoteInfoTrio(jitOrig.nt,jitOrig.rt,new JNote(jitOrig.nt,third));
+                outputList.add(index, jitNew);
+                if (generateHarmoniesRecursively(index + 1)){
+                   return true;
                 }
                 else {
-                    chd = chordSet.get(jitOrig.rt.noteAsIntegerInCScale());
-
-                    jitPrev = outputList.get(index - 1);
-                    hmyToStayCloseTo = jitPrev.hmy.asInt();
-
-                    hmyTry1 = jitOrig.nt.asInt() + chd.third-chd.root; // account for both major and minor chords
-                    hmyTry2 = jitOrig.nt.asInt() + JNote.FIFTH;
-                    hmyTry3 = jitOrig.nt.asInt() + JNote.OCTAVE;
-
-                    if (Math.abs(hmyTry1-hmyToStayCloseTo)<=MARGIN){
-                        //generateHmy
+                    jitNew = new JNoteInfoTrio(jitOrig.nt, jitOrig.rt, new JNote(jitOrig.nt, JNote.FIFTH));
+                    outputList.add(index, jitNew);
+                    if (generateHarmoniesRecursively(index + 1)){
+                        return true;
+                    }else{
+                        jitNew = new JNoteInfoTrio(jitOrig.nt,jitOrig.rt,new JNote(jitOrig.nt,JNote.OCTAVE));
+                        outputList.add(index, jitNew);
+                        if (generateHarmoniesRecursively(index + 1)){
+                            return true;
+                        } else{
+                            jitNew = new JNoteInfoTrio(jitOrig.nt,jitOrig.rt,jitOrig.nt);
+                            outputList.add(index, jitNew);
+                            if (generateHarmoniesRecursively(index + 1)){
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
+                        }
                     }
-                    else if (Math.abs(hmyTry2-hmyToStayCloseTo)<=MARGIN){
-                        // generateHMy with try2
-                    }
-                    else if (Math.abs(hmyTry3-hmyToStayCloseTo)<=MARGIN){
-                        // generateHmy with Try3
-                    }
-                    else {
-                        return false; // i.e. this track is a dead end.
-                    }
+                }
+
+            }
+            else {
+                chd = chordSet.get(jitOrig.rt.noteAsIntegerInCScale());
+
+                jitPrev = outputList.get(index - 1);
+                hmyToStayCloseTo = jitPrev.hmy.asInt();
+
+                hmyTry1 = jitOrig.nt.asInt() + chd.third-chd.root; // account for both major and minor chords
+                hmyTry2 = jitOrig.nt.asInt() + JNote.FIFTH;
+                hmyTry3 = jitOrig.nt.asInt() + JNote.OCTAVE;
+
+                int whatNtIs = jitOrig.nt.noteAsIntegerInCScale()-jitOrig.rt.noteAsIntegerInCScale();
 
 
-
-                            jitNew = new JNoteInfoTrio()
+                jitNew = new JNoteInfoTrio(jitOrig.nt,jitOrig.rt,new JNote(jitOrig.nt,chd.third-whatNtIs));
+                outputList.add(index, jitNew);
+                if (generateHarmoniesRecursively(index + 1)){
+                    return true;
+                }
+                else {
+                    jitNew = new JNoteInfoTrio(jitOrig.nt, jitOrig.rt, new JNote(jitOrig.nt, chd.fifth-whatNtIs));
+                    outputList.add(index, jitNew);
+                    if (generateHarmoniesRecursively(index + 1)){
+                        return true;
+                    }else {
+                        jitNew = new JNoteInfoTrio(jitOrig.nt, jitOrig.rt, new JNote(jitOrig.nt, JNote.OCTAVE - whatNtIs));
+                        outputList.add(index, jitNew);
+                        if (generateHarmoniesRecursively(index + 1)) {
+                            return true;
+                        } else {
+                            jitNew = new JNoteInfoTrio(jitOrig.nt, jitOrig.rt, jitOrig.nt);
+                            outputList.add(index, jitNew);
+                            if (generateHarmoniesRecursively(index + 1)) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
                 }
             }
-
-            generateHarmonyRecursively(i+)
         }
     }
 
-    public JNote generateHarmony(JNoteInfoTrio input){
-        JNoteMelodyDatum temp = input.normalizedToCScale();
-
-        if (temp==null){
-            outputList.add(new JNoteInfoTrio(temp.nt, temp.rt, null));
-        }
-        else {
-            outputList.add(new JNoteInfoTrio(temp.nt, temp.rt, null));
-        }
-
-        key = input.key;
-        isMajorKey = input.isInMajorKey();
-
-        System.out.println(temp.rt.toString());
-        System.out.println(temp.rt.asInt());
-
-        Chord chord;
-        int noteInt, rootInt, hmyInt;
-
-        noteInt = temp.nt.noteAsIntegerInCScale();
-        rootInt = temp.rt.noteAsIntegerInCScale();
-
-        System.out.println("DTE.java/genHarm: " + input.toString());
-        System.out.println("DTE.java/genHarm: " + temp.toString());
-
-        if (isMajorKey){
-
-            //whichever one "Note is" in chord, harmony is the other one.
-
-            chord = acceptableChordsinMajor.get(rootInt);
-            System.out.println("chord " + chord );
-
-            if(noteInt==chord.root){
-                harmony = new JNote(input.nt, chord.third-chord.root);
-            }
-            else if (noteInt==chord.third){
-                harmony = new JNote(input.nt, chord.fifth-chord.third);
-            }
-            else if (noteInt==chord.fifth){
-                harmony = new JNote(input.nt, (chord.root+JNote.OCTAVE)-chord.fifth);
-            }
-            else if (noteInt==chord.third-2) {
-                harmony = new JNote(input.nt, chord.fifth - (chord.third-2));
-            }
-            else {
-                harmony = new JNote(input.rt, -1/**JNote.OCTAVE*/);
+    public boolean isSolved(ArrayList<JNoteInfoTrio> list){
+        for (JNoteInfoTrio item : list ){
+            if (!item.isAFullTriad()){
+                return false;
             }
         }
-        else {
-            System.out.print(acceptableChordsinMinor.values());
-            chord = acceptableChordsinMinor.get(rootInt);
-            System.out.println("chord " + chord );
-
-            if(noteInt==chord.root){
-                harmony = new JNote(input.nt, chord.third-chord.root);
-            }
-            else if (noteInt==chord.third){
-                harmony = new JNote(input.nt, chord.fifth-chord.third);
-            }
-            else if (noteInt==chord.fifth){
-                harmony = new JNote(input.nt, (chord.root+ JNote.OCTAVE)-chord.fifth);
-            }
-            else if (noteInt==chord.third-1) {
-                harmony = new JNote(input.nt, chord.fifth - (chord.third-1));
-            }
-            else {
-                harmony = new JNote(input.rt, -1 /**JNote.OCTAVE*/);
-            }
-        }
-        return harmony;
+        return true;
     }
 
     public ArrayList<JNoteInfoTrio> spitOutHarmonyOutput(){
