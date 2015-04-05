@@ -15,18 +15,19 @@ public class HarmonyGenerationMachine {
         engine = eIn;
     }
 
-    public void turnOn(){
+    public void powerOn(){
+
+        engine.feedInMelodyInput(input);
         engine.prepareEngine();
     }
 
     public void run(){
-        System.out.println("engine.run(). input.key = " + input.get(0).key + ".");
-        System.out.println("engine.run()");
-        JNoteInfoTrio temp;
-        for (JNoteMelodyDatum jmd : input){
-            temp = new JNoteInfoTrio(jmd.nt,jmd.rt,engine.generateHarmony(jmd));
-            output.add(temp);
-        }
+        System.out.println("machine.run(). input.key = " + input.get(0).key + ".");
+        System.out.println("machine.run()");
+
+        engine.run();
+
+        output = engine.spitOutHarmonyOutput();
     }
 
     public String outputToString(){

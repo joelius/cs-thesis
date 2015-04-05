@@ -8,6 +8,9 @@ import java.util.Map;
  */
 public class HashMapEngine extends HarmonyGenerationEngine {
 
+    ArrayList<JNoteMelodyDatum> inputList;
+    ArrayList<JNoteInfoTrio> outputList;
+
     private ArrayList<JNoteHarmonyDatum> harmonyDataSet;
     private HashMap<String,Integer> brainAllData;
     private HashMap<String,Integer> brainNoDurationData;
@@ -21,6 +24,11 @@ public class HashMapEngine extends HarmonyGenerationEngine {
         brainNoIntervalData = new HashMap<String, Integer>();
         brainOnlyRootAndNoteData = new HashMap<String, Integer>();
     }
+
+    public void feedInMelodyInput(ArrayList<JNoteMelodyDatum> input){
+      inputList = input;
+    }
+
 
     public void prepareEngine(){
         JNoteHashKey hKeyAllData,hKeyNoDuration,hkeyNoInterval,hKeyOnlyRtAndNtData;
@@ -42,6 +50,15 @@ public class HashMapEngine extends HarmonyGenerationEngine {
             }
         }
     }
+
+    public void run(){
+        JNoteInfoTrio temp;
+        for (JNoteMelodyDatum jmd : inputList){
+            temp = new JNoteInfoTrio(jmd.nt,jmd.rt,generateHarmony(jmd));
+            outputList.add(temp);
+        }
+    }
+
 
     public JNote generateHarmony(JNoteMelodyDatum jmd){
         //System.out.println("generateHarmony. jmd.key = " + jmd.key + ".");
@@ -89,6 +106,10 @@ public class HashMapEngine extends HarmonyGenerationEngine {
         result = new JNote(jNoteString);
 
         return result;
+    }
+
+    public ArrayList<JNoteInfoTrio> spitOutHarmonyOutput(){
+        return outputList;
     }
 
     public String brainToString(HashMap<String,Integer> brain){

@@ -1,14 +1,10 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by jolpatrik on 2015-04-02.
  */
-public class DecisionTreeEngine extends HarmonyGenerationEngine{
-
-    public ArrayList<JNoteMelodyDatum> inputList;
-    public ArrayList<JNoteInfoTrio> outputList;
+public class StreamEngine extends HarmonyGenerationEngine{
 
     private int[] majorScale = {0,2,4,5,7,9,11};
     private int[] minorScale = {0,2,3,5,7,8,10};
@@ -18,8 +14,11 @@ public class DecisionTreeEngine extends HarmonyGenerationEngine{
     private JNote harmony;
     private String key;
 
-    public void feedInMelodyInput(ArrayList<JNoteMelodyDatum> inputListIn){
-        inputList = inputListIn;
+    ArrayList<JNoteMelodyDatum> inputList;
+    ArrayList<JNoteInfoTrio> outputList;
+
+    public void feedInMelodyInput(ArrayList<JNoteMelodyDatum> input){
+        inputList = input;
     }
 
     public void prepareEngine(){
@@ -30,22 +29,44 @@ public class DecisionTreeEngine extends HarmonyGenerationEngine{
         for (int i=0;i<minorScale.length;i++){
             acceptableChordsinMinor.put (minorScale[i], new Chord(minorScale[i],minorScale[(i+2)%minorScale.length],minorScale[(i+4)%minorScale.length]) );
         }
+
+        JNoteInfoTrio temp;
+        int interval;
+        for (JNoteMelodyDatum jmd : inputList){
+            if (jmd.nt.isSameNoteInScale(jmd.rt)){
+                interval = (jmd.isInMajorKey()) ? JNote.MAJOR_THIRD : JNote.MINOR_THIRD;
+                temp = new JNoteInfoTrio(jmd.nt,jmd.rt,new JNote(jmd.nt,interval));
+            } else {
+                temp = new JNoteInfoTrio(jmd.nt,jmd.rt,null);
+            }
+            outputList.add(temp);
+        }
         System.out.println("Decision Tree ready to go.");
     }
 
     public void run(){
+        JNoteInfoTrio prev;
         JNoteInfoTrio temp;
         for (JNoteMelodyDatum jmd : inputList){
             temp = new JNoteInfoTrio(jmd.nt,jmd.rt,generateHarmony(jmd));
             outputList.add(temp);
         }
+
+        //if hmy is null, then look at previous one, then try to make it as close as possible to the next hmy.
     }
 
     public JNote generateHarmony(JNoteMelodyDatum input){
+        JNoteMelodyDatum temp = input.normalizedToCScale();
+
+        if (temp==null){
+            outputList.add(new JNoteInfoTrio(temp.nt, temp.rt, null));
+        }
+        else {
+            outputList.add(new JNoteInfoTrio(temp.nt, temp.rt, null));
+        }
 
         key = input.key;
         isMajorKey = input.isInMajorKey();
-        JNoteMelodyDatum temp = input.normalizedToCScale();
 
         System.out.println(temp.rt.toString());
         System.out.println(temp.rt.asInt());

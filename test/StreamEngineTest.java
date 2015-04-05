@@ -2,19 +2,19 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by jolpatrik on 2015-04-03.
  */
-public class DecisionTreeEngineTest {
+public class StreamEngineTest {
     boolean generateHarmonies;
     @Test
     public void testGenerateHarmony() throws Exception {
 
         HarmonyGenerationEngine decisionTreeEngine = new DecisionTreeEngine();
 
-        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/maritime.txt";
+        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/barrett.txt";
         JNoteInputReader jnInputr = new JNoteInputReader();
 
         try { jnInputr.readInDataFile(pathToInputFile);
@@ -34,7 +34,7 @@ public class DecisionTreeEngineTest {
 
         machine.getOutput();
 
-        String filename = "DecisionTreeTest11Maritime";
+        String filename = "DecisionTreeTest10BarrettHmy";
         JFugueInputLoader jil = new JFugueInputLoader();
 
         generateHarmonies = true;

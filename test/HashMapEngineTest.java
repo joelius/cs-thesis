@@ -44,7 +44,7 @@ public class HashMapEngineTest {
 
         HarmonyGenerationMachine machine = new HarmonyGenerationMachine(jmdl.data, hashMapEngine);
 
-        machine.turnOn();
+        machine.powerOn();
 
         machine.run();
 
