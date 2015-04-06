@@ -19,9 +19,8 @@ public class JNoteMelodyDatum extends JNoteInfoTrio {
 
     public JNoteMelodyDatum normalizedToCScale(){
         JNoteMelodyDatum result;
-        JNote ntTemp, rtTemp, prevHmyTemp;
+        JNote ntTemp, rtTemp;
         int keyInt = JNote.getIntegerValueOfKeyInCScale(this.key);
-        System.out.println("keyInt: " + keyInt);
         ntTemp = new JNote(this.nt, -keyInt);
         rtTemp = new JNote(this.rt, -keyInt);
 

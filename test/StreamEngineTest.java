@@ -12,9 +12,9 @@ public class StreamEngineTest {
     @Test
     public void testGenerateHarmony() throws Exception {
 
-        HarmonyGenerationEngine decisionTreeEngine = new DecisionTreeEngine();
+        HarmonyGenerationEngine streamEngine = new StreamEngine();
 
-        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/barrett.txt";
+        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/maritime.txt";
         JNoteInputReader jnInputr = new JNoteInputReader();
 
         try { jnInputr.readInDataFile(pathToInputFile);
@@ -24,7 +24,7 @@ public class StreamEngineTest {
         melodiesIn.processJNoteInfoTrioArray(jnInputr.lst, jnInputr.key);
         assertNotEquals(null, melodiesIn.data.toString());
 
-        HarmonyGenerationMachine machine = new HarmonyGenerationMachine(melodiesIn.data, decisionTreeEngine);
+        HarmonyGenerationMachine machine = new HarmonyGenerationMachine(melodiesIn.data, streamEngine);
 
         machine.powerOn();
 
@@ -34,7 +34,7 @@ public class StreamEngineTest {
 
         machine.getOutput();
 
-        String filename = "DecisionTreeTest10BarrettHmy";
+        String filename = "StreamEngine6Maritime";
         JFugueInputLoader jil = new JFugueInputLoader();
 
         generateHarmonies = true;

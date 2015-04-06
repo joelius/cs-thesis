@@ -140,8 +140,6 @@ public class JNote {
         int result = 0;
         String keyTest = (key.contains("#")) ? key.substring(0,2) : key.substring(0,1);
 
-        System.out.println("keytest: " + keyTest);
-
         for (int i=0;i<notes.length;i++){
             if (notes[i].equalsIgnoreCase(keyTest)){
                 result = i;

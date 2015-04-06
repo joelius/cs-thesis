@@ -31,7 +31,18 @@ public class JNoteInfoTrio
     }
 
     public boolean isAFullTriad(){
-        return (nt!=null) && (rt!=null) && (hmy!=null);
+        System.out.println("isAFullTriad: " + this.toString());
+        return (nt!=null) && (rt!=null) && (hmy!=null) && (!hmy.toString().contains("x"));
+    }
+
+    public String toNormalizedNumString(){
+        int note, root, harmony;
+
+        note = (nt==null) ? -99 : nt.noteAsIntegerInCScale();
+        root = (rt==null) ? -99 : rt.noteAsIntegerInCScale();
+        harmony = (hmy==null) ? -99 : hmy.noteAsIntegerInCScale();
+
+        return "JNoteInfoTrio: Note: " + note + " Root: " + root + " Harmony: " + harmony;
     }
 
 }
