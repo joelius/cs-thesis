@@ -43,7 +43,7 @@ public class StreamHashSetEngineTest {
 
         machine.getOutput();
 
-        String filename = "StreamHashSetEngine2MaritimewHornpipe";
+        String filename = "StreamHashSetEngine3MaritimeHornpipe";
         JFugueInputLoader jil = new JFugueInputLoader();
 
         boolean generateHarmonies = true;

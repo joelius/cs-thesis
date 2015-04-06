@@ -161,7 +161,6 @@ public class StreamHashSetEngine extends HarmonyGenerationEngine{
                 Chord chd;
                 if (index == 0) {
                     jitOrig = song[index];
-//                    int[] offsetsToTry = new int[]{third, JNote.FIFTH, JNote.OCTAVE, 0};
                     int[] offsetsToTry = new int[]{third, JNote.FIFTH, JNote.OCTAVE, 0};
                     for (int i = 0; i < offsetsToTry.length; i++) {
                         jitNew = new JNoteInfoTrio(jitOrig.nt, jitOrig.rt, new JNote(jitOrig.nt, offsetsToTry[i]));
@@ -177,90 +176,41 @@ public class StreamHashSetEngine extends HarmonyGenerationEngine{
                     jitOrig = song[index];
                     chds = chordMap.get(jitOrig.rt.noteAsIntegerInCScale());
 
-                    chd = chds[0];
+                    for (int chdVariation=0;chdVariation<chds.length;chdVariation++){
 
-                    int[] hmyOffsetTries = harmonyOffsetSet(jitOrig.nt, chd);
+                        chd = chds[chdVariation];
 
-                    if(DEBUG)System.out.println("||generateHarmoniesRecursively|| jitOrig" + jitOrig.toNormalizedNumString());
+                        int[] hmyOffsetTries = harmonyOffsetSet(jitOrig.nt, chd);
 
-                    for (int i = 0; i < hmyOffsetTries.length; i++) {
-                        jitNew = new JNoteInfoTrio(jitOrig.nt, jitOrig.rt, new JNote(jitOrig.nt, hmyOffsetTries[i]));
-                        song[index] = jitNew;
-                        if(DEBUG)System.out.println("||generateHarmoniesRecursively|| trying offset " + i + ": " + hmyOffsetTries[i]);
-                        if(DEBUG)System.out.println("||generateHarmoniesRecursively|| = " + jitNew.toString());
-                        if (Math.abs(jitNew.hmy.asInt() - jitPrev.hmy.asInt()) <= MAX_MARGIN){
-                            if (!CAN_DOUBLE_NOTES){
-                                if (!(jitNew.hmy.asInt()==jitPrev.hmy.asInt())){
+                        if(DEBUG)System.out.println("||generateHarmoniesRecursively|| jitOrig" + jitOrig.toNormalizedNumString());
+
+                        for (int i = 0; i < hmyOffsetTries.length; i++) {
+                            jitNew = new JNoteInfoTrio(jitOrig.nt, jitOrig.rt, new JNote(jitOrig.nt, hmyOffsetTries[i]));
+                            song[index] = jitNew;
+                            if (DEBUG)
+                                System.out.println("||generateHarmoniesRecursively|| trying offset " + i + ": " + hmyOffsetTries[i]);
+                            if (DEBUG) System.out.println("||generateHarmoniesRecursively|| = " + jitNew.toString());
+                            if (Math.abs(jitNew.hmy.asInt() - jitPrev.hmy.asInt()) <= MAX_MARGIN) {
+                                if (!CAN_DOUBLE_NOTES) {
+                                    if (!(jitNew.hmy.asInt() == jitPrev.hmy.asInt())) {
+                                        temp = generateHarmoniesRecursively((index + 1), song);
+                                    }
+                                } else {
                                     temp = generateHarmoniesRecursively((index + 1), song);
                                 }
-                            }else {
-                                temp = generateHarmoniesRecursively((index + 1), song);
+                            }
+                            if (temp != null) {
+                                return temp;
+
                             }
                         }
-                        if (temp!=null){
-                            return temp;
-
-                        }
-                     }
-
-//                   return false;
-            }
+                    }
+                }
         }
         return null;
 
     }
-
-    public void generateHarmoniesDecentlyRecursively(int index, JNoteInfoTrio[] song){
-
-        if (isSolved(song)) {
-            if(DEBUG)System.out.println("||generateHarmoniesRecursively|| isSolved()!");
-            return;
-        }
-        else {
-            if (index < song.length){
-                if(DEBUG) System.out.println("||generateHarmoniesRecursively|| index >= song.length! (index: " +
-                        index + ". Song.length: " + song.length);
-
-                if(DEBUG)System.out.println("||generateHarmoniesRecursively|| At index " + index);
-
-                JNoteInfoTrio jitOrig, jitPrev, jitNew;
-                Chord chd;
-                HashSet<Chord> chds;
-                if (index == 0) {
-                    jitOrig = song[index];
-                    int[] offsetsToTry = new int[]{third, JNote.FIFTH, JNote.OCTAVE, 0};
-                    for (int i = 0; i < offsetsToTry.length; i++) {
-                        jitNew = new JNoteInfoTrio(jitOrig.nt, jitOrig.rt, new JNote(jitOrig.nt, offsetsToTry[i]));
-                        song[index] = jitNew;
-                        if(DEBUG)    System.out.println("||generateHarmoniesRecursively|| index=0, offset: " + offsetsToTry[i]);
-                        generateHarmoniesRecursively((index + 1), song);
-                    }
-                } else {
-                    jitPrev = song[index - 1];
-
-                    if(DEBUG)System.out.println("WATCH IT: " + index);
-                    jitOrig = song[index];
-                    chds = inputChordSet.get(jitOrig.rt.noteAsIntegerInCScale());
-                    chd = chds.iterator().next();
-                    int[] hmyOffsetTries = harmonyOffsetSet(jitOrig.nt, chd);
-
-                    if(DEBUG)System.out.println("||generateHarmoniesRecursively|| jitOrig" + jitOrig.toNormalizedNumString());
-
-                    for (int i = 0; i < hmyOffsetTries.length; i++) {
-                        jitNew = new JNoteInfoTrio(jitOrig.nt, jitOrig.rt, new JNote(jitOrig.nt, hmyOffsetTries[i]));
-                        song[index] = jitNew;
-                        if(DEBUG)System.out.println("||generateHarmoniesRecursively|| trying offset " + i + ": " + hmyOffsetTries[i]);
-                        if(DEBUG)System.out.println("||generateHarmoniesRecursively|| = " + jitNew.toString());
-                        if (Math.abs(jitNew.hmy.asInt() - jitPrev.hmy.asInt()) <= MAX_MARGIN){
-                            generateHarmoniesRecursively((index + 1), song);
-                        }
-                    }
-                }
-//                return false;
-            }
-        }
-    }
-
+     /**/
     public int[] harmonyOffsetSet(JNote j, Chord c){
         int o1, o2, o3, o4, o5, o6, note, tonic, octaveTonic, upperThird, upperFifth, lowerThird, lowerFifth, octave, octaveThird;
         note = j.noteAsIntegerInCScale();
