@@ -31,6 +31,7 @@ public class HashMapEngine extends HarmonyGenerationEngine {
 
 
     public void prepareEngine(){
+        outputList = new ArrayList<JNoteInfoTrio>();
         JNoteHashKey hKeyAllData,hKeyNoDuration,hkeyNoInterval,hKeyOnlyRtAndNtData;
         JNoteHarmonyDatum temp;
         for (JNoteHarmonyDatum datum : harmonyDataSet){

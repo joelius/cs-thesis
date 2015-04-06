@@ -6,7 +6,6 @@ import java.util.ArrayList;
  */
 public class HarmonyGenerationSuite {
 
-    private boolean generateHarmonies;
     private String pathToMelodyInputFile;
     private String pathToDataBankFile;
 
@@ -137,7 +136,7 @@ public class HarmonyGenerationSuite {
 
         jil.populateWithJNoteTrioArray(melodyInputReader.lst, melodyInputReader.key, melodyInputReader.timeSig, melodyInputReader.tempo);
         try {
-            jFugueJavaBuilder.writeFile(jil.patternStringArray, filename+"-ERROR");
+            jFugueJavaBuilder.writeFile(jil.patternStringArray, noHmies);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
