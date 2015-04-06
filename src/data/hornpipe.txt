@@ -20,4 +20,4 @@ E5q C3q G5q
 F5q F3q A5q
 C5q A3q F5q
 G5q C3h E5h
-C5h L N
+C5h C3h C4h

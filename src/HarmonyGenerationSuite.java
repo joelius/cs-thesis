@@ -96,35 +96,35 @@ public class HarmonyGenerationSuite {
     }
 
     public void outputToJFugue(){
-        String noHmies = outputFilename + "-0-NoHarmonies";
-        String decisionTree = outputFilename + "-1-DecisionTreeEngine";
-        String stream = outputFilename + "-2-StreamEngine";
-        String hashMap = outputFilename + "-3-HashMapEngine";
-
-        String filename = outputFilename;
+        String filename;
+        String noHmiesFileName = outputFilename + "0NoHarmonies";
+        String decisionTreeFileName = outputFilename + "1DecisionTreeEngine";
+        String streamFileName = outputFilename + "2StreamEngine";
+        String hashMapFileName = outputFilename + "3HashMapEngine";
 
         for (HarmonyGenerationMachine m : machines){
 
             jil.populateWithJNoteTrioArray(m.getOutput(), melodyInputReader.key, melodyInputReader.timeSig, melodyInputReader.tempo);
 
             if (m.engine instanceof DecisionTreeEngine){
-                filename = decisionTree;
+                filename = decisionTreeFileName;
                 System.out.println("||OutputToJFugue()|| We have a DecisionTreeEngine!");
             }
             else if (m.engine instanceof StreamEngine){
-                filename = stream;
+                filename = streamFileName;
                 System.out.println("||OutputToJFugue()|| We have a StreamEngine!");
             }
             else if (m.engine instanceof HashMapEngine){
-                filename = hashMap;
+                filename = hashMapFileName;
                 System.out.println("||OutputToJFugue()|| We have a HashMapEngine!");
             }
             else {
+                filename = outputFilename+"ERROR:UnrecognizedEngine";
                 System.out.println("||OutputToJFugue()|| We have an Unrecognized Engine!");
             }
 
             try {
-                jFugueJavaBuilder.writeFile(jil.patternStringArray, filename+"-ERROR");
+                jFugueJavaBuilder.writeFile(jil.patternStringArray, filename);
             }
             catch (Exception e){
                 System.out.println(e.getMessage());
@@ -136,7 +136,7 @@ public class HarmonyGenerationSuite {
 
         jil.populateWithJNoteTrioArray(melodyInputReader.lst, melodyInputReader.key, melodyInputReader.timeSig, melodyInputReader.tempo);
         try {
-            jFugueJavaBuilder.writeFile(jil.patternStringArray, noHmies);
+            jFugueJavaBuilder.writeFile(jil.patternStringArray, noHmiesFileName);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -155,73 +155,6 @@ public class HarmonyGenerationSuite {
         runSuiteOfMachines();
         initializeJFugueWriter();
         outputToJFugue();
-//        String pathToFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/hashmapfillupCMaj.txt";
-//        JNoteHarmonyInfoReader jnhir = new JNoteHarmonyInfoReader();
-//
-//        try { jnhir.readInDataFile(pathToFile);
-//        } catch (IOException e){System.err.print(e.getMessage());}
-//
-////        //
-////
-////        JNoteHarmonyDataLoader jhdl = new JNoteHarmonyDataLoader();
-////
-////       jhdl.processJNoteInfoTrioArray(jnhir.lst, jnhir.key);
-////        System.out.println("after jhdl.processJNoteInfoTrioArray. Key: " + jnhir.lst.get(0).nt);
-//////
-////        for (JNoteHarmonyDatum datum : jhdl.data){
-////            System.out.println(datum.toString());
-////        }
-////
-////        HarmonyGenerationEngine hashMapEngine = new HashMapEngine(jhdl.data);
-//
-//   //     System.out.println("after hashMapEngine. Key: " + jhdl.data.get(0).key);
-//
-//
-//
-//
-////        HarmonyGenerationEngine streamEngine = new StreamEngine();
-////
-////        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/maritime.txt";
-////        JNoteInputReader jnInputr = new JNoteInputReader();
-////
-////        try { jnInputr.readInDataFile(pathToInputFile);
-////        } catch (IOException e){System.err.print(e.getMessage());}
-////
-////        JNoteMelodyDataLoader melodyLoader = new JNoteMelodyDataLoader();
-////        melodyLoader.processJNoteInfoTrioArray(jnInputr.lst, jnInputr.key);
-//////
-////
-////        HarmonyGenerationMachine machine = new HarmonyGenerationMachine(melodyLoader.data, streamEngine);
-////
-////        machine.powerOn();
-////
-////        machine.run();
-////
-////        System.out.println(machine.outputToString());
-////
-////        machine.getOutput();
-//
-//        String outputFilename = "StreamEngine15MaritimeMargin4NoDubThird";
-//        JFugueInputLoader jil = new JFugueInputLoader();
-//
-//        boolean generateHarmonies = true;
-//
-//        if (generateHarmonies){
-//            jil.populateWithJNoteTrioArray(machine.getOutput(), jnInputr.key, jnInputr.timeSig, jnInputr.tempo);
-//        }
-//        else{
-//            jil.populateWithJNoteTrioArray(jnInputr.lst, jnInputr.key,jnInputr.timeSig, jnInputr.tempo);
-//        }
-//
-//        JFugueBuilder test = new JFugueBuilder();
-//
-//        try {
-//            test.writeFile(jil.patternStringArray, outputFilename);
-//            // test.writeFile(jil.patternStringArray, filename);
-//        }
-//        catch (Exception e){
-//            System.out.println(e.getMessage());
-//        }
     }
 
 }

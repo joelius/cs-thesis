@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 /**
  * Created by jolpatrik on 2015-04-03.
@@ -39,5 +41,20 @@ public class SandboxTest {
             }
         }
 
+    }
+
+    @Test
+    public void testMajorScaleMinorScale(){
+        int[] majorScale = {0,2,4,5,7,9,11};
+        int[] minorScale = {0,2,3,5,7,8,10};
+        int[] temp = new int[minorScale.length];
+
+        for (int i=0;i<minorScale.length;i++){
+            minorScale[i] += 12;
+            temp[(i+2)%minorScale.length] = minorScale[i];
+
+        }
+        minorScale = temp;
+        System.out.println(Arrays.toString(minorScale));
     }
 }

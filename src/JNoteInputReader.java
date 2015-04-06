@@ -60,7 +60,12 @@ public class JNoteInputReader {
             String parts[] = line.split(": ");
             key = parts[1];
             timeSig = parts[2];
-            tempo = parts[3];
+            if(parts.length>3){
+                tempo = parts[3];
+            }
+            else {
+                tempo = "120";
+            }
             System.out.println("Key is: " + key);
             System.out.println("Time signature is: " + timeSig);
             System.out.println("Tempo is: " + tempo);

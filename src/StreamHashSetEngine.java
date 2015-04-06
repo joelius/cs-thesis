@@ -1,19 +1,17 @@
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by jolpatrik on 2015-04-02.
  */
-public class StreamEngine extends HarmonyGenerationEngine{
+public class StreamHashSetEngine extends HarmonyGenerationEngine{
 
     private static final boolean DEBUG = false;
     private int[] majorScale = {0,2,4,5,7,9,11};
     private int[] minorScale = {0,2,3,5,7,8,10};
     private HashMap<Integer, Chord> acceptableChordsinMajor = new HashMap<Integer, Chord>();
     private HashMap<Integer, Chord> acceptableChordsinMinor = new HashMap<Integer, Chord>();
-    private HashMap<Integer, Chord> chordSet;
+    private HashMap<Integer, HashSet<Chord>> inputChordSet;
+    private HashMap<Integer, Chord[]> chordMap;
     private JNote harmony;
     private boolean isInMajorKey;
     private String key;
@@ -23,8 +21,13 @@ public class StreamEngine extends HarmonyGenerationEngine{
 
     ArrayList<JNoteMelodyDatum> inputList;
     ArrayList<JNoteInfoTrio> outputList;
+    private ArrayList<JNoteHarmonyDatum> harmonyDataSet;
 
     JNoteInfoTrio[] fullSong;
+
+    public StreamHashSetEngine (ArrayList<JNoteHarmonyDatum> dataIn) {
+        harmonyDataSet = dataIn;
+    }
 
     public void feedInMelodyInput(ArrayList<JNoteMelodyDatum> input){
         inputList = input;
@@ -32,6 +35,51 @@ public class StreamEngine extends HarmonyGenerationEngine{
 
     public void prepareEngine(){
         outputList = new ArrayList<JNoteInfoTrio>();
+        inputChordSet = new HashMap<Integer, HashSet<Chord>>();
+        chordMap = new HashMap<Integer, Chord[]>();
+        JNoteHarmonyDatum temp;
+        Chord chd;
+        HashSet<Chord> chords;
+        int nt,rt,hmy;
+        for (JNoteHarmonyDatum datum : harmonyDataSet){
+            temp = datum.normalizedToCScale();
+
+            nt = temp.nt.noteAsIntegerInCScale();
+            rt = temp.rt.noteAsIntegerInCScale();
+            hmy = temp.hmy.noteAsIntegerInCScale();
+
+            if((nt!=rt)&&(rt!=hmy)&&(nt!=hmy)){
+                chd = new Chord(rt,nt,hmy);
+                if (inputChordSet.containsKey(rt)){
+                  inputChordSet.get(rt).add(chd);
+                }
+                else {
+                    chords = new HashSet<Chord>();
+                    chords.add(chd);
+                    inputChordSet.put(rt,chords);
+                }
+            }
+        }
+
+        Iterator it = inputChordSet.entrySet().iterator();
+        int keyTemp;
+        HashSet<Chord> setTemp;
+        Chord[] arrTemp;
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            keyTemp = (Integer) pair.getKey();
+            setTemp = (HashSet<Chord>) pair.getValue();
+            it.remove(); // avoids a ConcurrentModificationException
+            arrTemp = setTemp.toArray(new Chord[setTemp.size()]);
+            chordMap.put(keyTemp,arrTemp);
+        }
+
+
+        System.out.println(chordMap.keySet());
+        for (Chord[] c : chordMap.values()){
+            System.out.println(Arrays.toString(c));
+        }
+
 
         for (int i=0;i<majorScale.length;i++){
             acceptableChordsinMajor.put (majorScale[i], new Chord(majorScale[i],majorScale[(i+2)%majorScale.length],majorScale[(i+4)%majorScale.length]) );
@@ -42,20 +90,14 @@ public class StreamEngine extends HarmonyGenerationEngine{
 
         key = inputList.get(0).key;
         isInMajorKey = inputList.get(0).isInMajorKey();
-        chordSet = (isInMajorKey) ? acceptableChordsinMajor : acceptableChordsinMinor;
         third = (isInMajorKey) ? JNote.MAJOR_THIRD : JNote.MINOR_THIRD;
 
-        JNoteInfoTrio temp;
+        JNoteInfoTrio jitTemp;
         int interval;
         for (JNoteMelodyDatum jmd : inputList){
-//            if (jmd.nt.isSameNoteInScale(jmd.rt)){
-//                interval = (jmd.isInMajorKey()) ? JNote.MAJOR_THIRD : JNote.MINOR_THIRD;
-//                temp = new JNoteInfoTrio(jmd.nt,jmd.rt,new JNote(jmd.nt,interval));
-//            } else {
-                JNoteMelodyDatum tempJMD = jmd.normalizedToCScale();
-                temp = new JNoteInfoTrio(tempJMD.nt,tempJMD.rt,null);
-//            }
-            outputList.add(temp);
+            JNoteMelodyDatum tempJMD = jmd.normalizedToCScale();
+            jitTemp = new JNoteInfoTrio(tempJMD.nt,tempJMD.rt,null);
+            outputList.add(jitTemp);
         }
 
 
@@ -115,6 +157,7 @@ public class StreamEngine extends HarmonyGenerationEngine{
         }
         if (index < song.length){
                 JNoteInfoTrio jitOrig, jitPrev, jitNew;
+                Chord[] chds;
                 Chord chd;
                 if (index == 0) {
                     jitOrig = song[index];
@@ -132,7 +175,10 @@ public class StreamEngine extends HarmonyGenerationEngine{
 
                     if(DEBUG)System.out.println("WATCH IT: " + index);
                     jitOrig = song[index];
-                    chd = chordSet.get(jitOrig.rt.noteAsIntegerInCScale());
+                    chds = chordMap.get(jitOrig.rt.noteAsIntegerInCScale());
+
+                    chd = chds[0];
+
                     int[] hmyOffsetTries = harmonyOffsetSet(jitOrig.nt, chd);
 
                     if(DEBUG)System.out.println("||generateHarmoniesRecursively|| jitOrig" + jitOrig.toNormalizedNumString());
@@ -179,6 +225,7 @@ public class StreamEngine extends HarmonyGenerationEngine{
 
                 JNoteInfoTrio jitOrig, jitPrev, jitNew;
                 Chord chd;
+                HashSet<Chord> chds;
                 if (index == 0) {
                     jitOrig = song[index];
                     int[] offsetsToTry = new int[]{third, JNote.FIFTH, JNote.OCTAVE, 0};
@@ -193,7 +240,8 @@ public class StreamEngine extends HarmonyGenerationEngine{
 
                     if(DEBUG)System.out.println("WATCH IT: " + index);
                     jitOrig = song[index];
-                    chd = chordSet.get(jitOrig.rt.noteAsIntegerInCScale());
+                    chds = inputChordSet.get(jitOrig.rt.noteAsIntegerInCScale());
+                    chd = chds.iterator().next();
                     int[] hmyOffsetTries = harmonyOffsetSet(jitOrig.nt, chd);
 
                     if(DEBUG)System.out.println("||generateHarmoniesRecursively|| jitOrig" + jitOrig.toNormalizedNumString());
