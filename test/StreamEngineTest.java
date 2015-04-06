@@ -40,13 +40,13 @@ public class StreamEngineTest {
         generateHarmonies = true;
 
         if (generateHarmonies){
-            jil.populateWithJNoteTrioArray(machine.getOutput(), jnInputr.key, jnInputr.timeSig);
+            jil.populateWithJNoteTrioArray(machine.getOutput(), jnInputr.key, jnInputr.timeSig, jnInputr.tempo);
         }
         else{
-            jil.populateWithJNoteTrioArray(jnInputr.lst, jnInputr.key,jnInputr.timeSig);
+            jil.populateWithJNoteTrioArray(jnInputr.lst, jnInputr.key,jnInputr.timeSig, jnInputr.tempo);
         }
 
-        JFugueBuilder test = new JFugueBuilder("what");
+        JFugueBuilder test = new JFugueBuilder();
 
         try {
             test.writeFile(jil.patternStringArray, filename);

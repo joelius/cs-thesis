@@ -91,12 +91,12 @@ public class JFugueInputLoader {
 
     }
 
-    public void populateWithJNoteTrioArray(ArrayList<JNoteInfoTrio> input, String keyIn, String timeSigIn){
+    public void populateWithJNoteTrioArray(ArrayList<JNoteInfoTrio> input, String keyIn, String timeSigIn, String tempoIn){
 
         parseKey(keyIn);
         parseTimeSig(timeSigIn);
 
-        String tempV0Melody = "V0 ";
+        String tempV0Melody = "T"+tempoIn+" V0 ";
         String tempV1RootNotes = "V1 ";
         String tempV2Harmony = "V2 ";
         float currentNoteLength = 0;

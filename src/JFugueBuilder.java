@@ -21,8 +21,7 @@ public class JFugueBuilder {
             "}";
 
 
-    public JFugueBuilder (String stuff){
-        jfugueFile = stuff;
+    public JFugueBuilder (){
     }
 
     // TODO: test this method & finish it, too

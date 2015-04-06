@@ -57,13 +57,13 @@ public class HashMapEngineTest {
         boolean generateHarmonies = true;
 
         if (generateHarmonies){
-            jil.populateWithJNoteTrioArray(machine.getOutput(), jnInputr.key, jnInputr.timeSig);
+            jil.populateWithJNoteTrioArray(machine.getOutput(), jnInputr.key, jnInputr.timeSig, jnInputr.tempo);
         }
         else{
-            jil.populateWithJNoteTrioArray(jnInputr.lst, jnInputr.key,jnInputr.timeSig);
+            jil.populateWithJNoteTrioArray(jnInputr.lst, jnInputr.key,jnInputr.timeSig, jnInputr.tempo);
         }
 
-        JFugueBuilder test = new JFugueBuilder("");
+        JFugueBuilder test = new JFugueBuilder();
         String filename = "HMETest4Barrett";
 
         System.out.println(machine.engine.toString());

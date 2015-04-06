@@ -14,7 +14,7 @@ public class DecisionTreeEngineTest {
 
         HarmonyGenerationEngine decisionTreeEngine = new DecisionTreeEngine();
 
-        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/maritime.txt";
+        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/bagOspuds.txt";
         JNoteInputReader jnInputr = new JNoteInputReader();
 
         try { jnInputr.readInDataFile(pathToInputFile);
@@ -34,19 +34,19 @@ public class DecisionTreeEngineTest {
 
         machine.getOutput();
 
-        String filename = "DecisionTreeTest11Maritime";
+        String filename = "DecisionTreeTest17SpudsHarmonies";
         JFugueInputLoader jil = new JFugueInputLoader();
 
         generateHarmonies = true;
 
         if (generateHarmonies){
-            jil.populateWithJNoteTrioArray(machine.getOutput(), jnInputr.key, jnInputr.timeSig);
+            jil.populateWithJNoteTrioArray(machine.getOutput(), jnInputr.key, jnInputr.timeSig, jnInputr.tempo);
         }
         else{
-            jil.populateWithJNoteTrioArray(jnInputr.lst, jnInputr.key,jnInputr.timeSig);
+            jil.populateWithJNoteTrioArray(jnInputr.lst, jnInputr.key,jnInputr.timeSig, jnInputr.tempo);
         }
 
-        JFugueBuilder test = new JFugueBuilder("what");
+        JFugueBuilder test = new JFugueBuilder();
 
         try {
             test.writeFile(jil.patternStringArray, filename);
