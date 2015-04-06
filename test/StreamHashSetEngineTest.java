@@ -23,7 +23,7 @@ public class StreamHashSetEngineTest {
 
         HarmonyGenerationEngine streamHashSetEngine = new StreamHashSetEngine(jhdl.data);
 
-        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/maritime.txt";
+        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/bagOspuds.txt";
         JNoteInputReader jnInputr = new JNoteInputReader();
 
         try { jnInputr.readInDataFile(pathToInputFile);
@@ -43,7 +43,7 @@ public class StreamHashSetEngineTest {
 
         machine.getOutput();
 
-        String filename = "StreamHashSetEngine3MaritimeHornpipe";
+        String filename = "StreamHashSetEngine5BagOSpuds";
         JFugueInputLoader jil = new JFugueInputLoader();
 
         boolean generateHarmonies = true;
