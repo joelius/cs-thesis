@@ -12,7 +12,7 @@ public class InputToOutputTestHmy {
         String inputPath = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/input4.txt";
         JFugueDataLoaderSingle jdls = new JFugueDataLoaderSingle();
         jdls.populateWithDataFile(inputPath);
-        JFugueBuilder test = new JFugueBuilder("what");
+        JFugueBuilder test = new JFugueBuilder();
 
         try {
             test.writeFile(jdls.patternStringArray, filename);

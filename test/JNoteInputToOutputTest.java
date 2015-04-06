@@ -12,7 +12,7 @@ public class JNoteInputToOutputTest {
         String inputPath = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/hornpipev2.txt";
         JFugueInputLoader jil = new JFugueInputLoader();
         jil.populateWithDataFile(inputPath);
-        JFugueBuilder test = new JFugueBuilder("what");
+        JFugueBuilder test = new JFugueBuilder();
 
         try {
             test.writeFile(jil.patternStringArray, filename);

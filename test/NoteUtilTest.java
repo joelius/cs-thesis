@@ -9,7 +9,7 @@ public class NoteUtilTest {
         String filename = "ThisNewFile";
         JFugueDataLoader jdl = new JFugueDataLoader();
         jdl.populateWithDataFile("/Users/jolpatrik/IdeaProjects/harmonator/src/data/input.txt");
-        JFugueBuilder test = new JFugueBuilder("what");
+        JFugueBuilder test = new JFugueBuilder();
 
         try {
             test.writeFile(jdl.patternStringArray, filename);

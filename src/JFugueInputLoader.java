@@ -146,6 +146,9 @@ public class JFugueInputLoader {
         }
     }
 
+    public void clearPatternStringArray(){
+        patternStringArray.clear();
+    }
 
     public void parseKey(String input){
         String[] keyAndMajMin = input.split("-");
