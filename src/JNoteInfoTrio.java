@@ -31,7 +31,7 @@ public class JNoteInfoTrio
     }
 
     public boolean isAFullTriad(){
-        System.out.println("isAFullTriad: " + this.toString());
+     //   System.out.println("isAFullTriad: " + this.toString());
         return (nt!=null) && (rt!=null) && (hmy!=null) && (!hmy.toString().contains("x"));
     }
 

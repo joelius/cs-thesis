@@ -34,7 +34,7 @@ public class StreamEngineTest {
 
         machine.getOutput();
 
-        String filename = "StreamEngine6Maritime";
+        String filename = "StreamEngine15MaritimeMargin4NoDubThird";
         JFugueInputLoader jil = new JFugueInputLoader();
 
         generateHarmonies = true;
