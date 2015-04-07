@@ -18,6 +18,7 @@ public class HarmonyGenerationSuite {
     private HarmonyGenerationEngine dte;
     private HarmonyGenerationEngine hme;
     private HarmonyGenerationEngine se;
+    private HarmonyGenerationEngine shse;
 
     private ArrayList<HarmonyGenerationEngine> engines;
     private ArrayList<HarmonyGenerationMachine> machines;
@@ -57,10 +58,12 @@ public class HarmonyGenerationSuite {
         dte = new DecisionTreeEngine();
         se = new StreamEngine();
         hme = new HashMapEngine(harmonyDataLoader.data);
+        shse = new StreamHashSetEngine(harmonyDataLoader.data);
 
         engines.add(dte);
         engines.add(se);
         engines.add(hme);
+        engines.add(shse);
     }
 
     public void loadInMelodyData(){
@@ -101,6 +104,7 @@ public class HarmonyGenerationSuite {
         String decisionTreeFileName = outputFilename + "1DecisionTreeEngine";
         String streamFileName = outputFilename + "2StreamEngine";
         String hashMapFileName = outputFilename + "3HashMapEngine";
+        String streamHashSetFilename = outputFilename + "4StreamHashSetEngine";
 
         for (HarmonyGenerationMachine m : machines){
 
@@ -118,6 +122,10 @@ public class HarmonyGenerationSuite {
                 filename = hashMapFileName;
                 System.out.println("||OutputToJFugue()|| We have a HashMapEngine!");
             }
+            else if (m.engine instanceof StreamHashSetEngine){
+                filename = streamHashSetFilename;
+                System.out.println("||OutputToJFugue()|| We have a StreamHashSetEngine!");
+            }
             else {
                 filename = outputFilename+"ERROR:UnrecognizedEngine";
                 System.out.println("||OutputToJFugue()|| We have an Unrecognized Engine!");
@@ -132,7 +140,7 @@ public class HarmonyGenerationSuite {
             jil.clearPatternStringArray();
         }
 
-        //write original input, for reference
+        //write original melody input (no harmony), for reference
 
         jil.populateWithJNoteTrioArray(melodyInputReader.lst, melodyInputReader.key, melodyInputReader.timeSig, melodyInputReader.tempo);
         try {

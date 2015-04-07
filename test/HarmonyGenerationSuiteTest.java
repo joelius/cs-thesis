@@ -11,7 +11,7 @@ public class HarmonyGenerationSuiteTest {
     public void testRun() throws Exception {
         String melody = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/takeonme.txt";
         String dataToUse = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/hashmapfillupAHA.txt";
-        String output = "HGSTakeOnMe01Custom";
+        String output = "HGSTakeOnMe02Custom";
         HarmonyGenerationSuite hgs = new HarmonyGenerationSuite(melody,dataToUse,output);
 
         hgs.run();
