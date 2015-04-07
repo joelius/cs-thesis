@@ -17,7 +17,7 @@ public class StreamHashSetEngine extends HarmonyGenerationEngine{
     private String key;
     private int third;
     private int MAX_MARGIN = 3;
-    private boolean CAN_DOUBLE_NOTES = false;
+    private boolean CAN_DOUBLE_NOTES = true;
 
     ArrayList<JNoteMelodyDatum> inputList;
     ArrayList<JNoteInfoTrio> outputList;

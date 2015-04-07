@@ -12,7 +12,7 @@ public class StreamHashSetEngineTest {
     @Test
     public void testRun() throws Exception {
 
-        String pathToFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/hashmapfillupAmin.txt";
+        String pathToFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/hashmapfillupAHA.txt";
         JNoteHarmonyInfoReader jnhir = new JNoteHarmonyInfoReader();
 
         try { jnhir.readInDataFile(pathToFile);
@@ -23,7 +23,7 @@ public class StreamHashSetEngineTest {
 
         HarmonyGenerationEngine streamHashSetEngine = new StreamHashSetEngine(jhdl.data);
 
-        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/bagOspuds.txt";
+        String pathToInputFile = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/takeonme.txt";
         JNoteInputReader jnInputr = new JNoteInputReader();
 
         try { jnInputr.readInDataFile(pathToInputFile);
@@ -43,7 +43,7 @@ public class StreamHashSetEngineTest {
 
         machine.getOutput();
 
-        String filename = "StreamHashSetEngine5BagOSpuds";
+        String filename = "StreamHashSetEngine10TakeOnMeCustom";
         JFugueInputLoader jil = new JFugueInputLoader();
 
         boolean generateHarmonies = true;
