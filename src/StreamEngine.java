@@ -18,8 +18,8 @@ public class StreamEngine extends HarmonyGenerationEngine{
     private boolean isInMajorKey;
     private String key;
     private int third;
-    private int MAX_MARGIN = 7;
-    private boolean CAN_DOUBLE_NOTES = false;
+    private int MAX_MARGIN = 4;
+    private boolean CAN_DOUBLE_NOTES = true;
 
     ArrayList<JNoteMelodyDatum> inputList;
     ArrayList<JNoteInfoTrio> outputList;

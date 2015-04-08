@@ -9,9 +9,9 @@ public class HarmonyGenerationSuiteTest {
 
     @Test
     public void testRun() throws Exception {
-        String melody = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/takeonme.txt";
-        String dataToUse = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/hashmapfillupAHA.txt";
-        String output = "HGSTakeOnMe02Custom";
+        String melody = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/usoldghosts.txt";
+        String dataToUse = "/Users/jolpatrik/IdeaProjects/harmonator/src/data/hashmapfillupAmin.txt";
+        String output = "HGSGhostsvquarter";
         HarmonyGenerationSuite hgs = new HarmonyGenerationSuite(melody,dataToUse,output);
 
         hgs.run();
